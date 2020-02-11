@@ -1,3 +1,9 @@
 import * as React from 'react'
 
-export const RangeInput = () => <div className="range-input">Range Input</div>
+import './range-input.css'
+
+export const RangeInput = () => (
+  <div className="range-input">
+    <div className="range-input__container">Range Input</div>
+  </div>
+)

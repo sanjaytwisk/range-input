@@ -15,6 +15,15 @@ module.exports = {
       ],
     })
     config.resolve.extensions.push('.ts', '.tsx')
+    config.module.rules = config.module.rules.map(rule => {
+      if (rule.test.toString().includes('css')) {
+        return {
+          ...rule,
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
+        }
+      }
+      return rule
+    })
     return config
   },
 }
