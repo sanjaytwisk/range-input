@@ -1,0 +1,32 @@
+{
+  "name": "react-range-input",
+  "version": "1.0.0",
+  "description": "Accessible React Range Input Component",
+  "main": "index.js",
+  "author": "Sanjay Twisk",
+  "license": "MIT",
+  "scripts": {
+    "dev": "start-storybook -p 5000 --ci",
+    "lint:ts": "tslint -c tslint.json -t stylish --fix src/**/*.{ts,tsx}",
+    "lint:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "5.3.12",
+    "@storybook/addon-actions": "5.3.12",
+    "@storybook/addon-knobs": "5.3.12",
+    "@storybook/react": "5.3.12",
+    "@types/jest": "25.1.2",
+    "@types/node": "13.7.0",
+    "babel-loader": "8.0.6",
+    "jest": "25.1.0",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "ts-jest": "25.2.0",
+    "ts-loader": "6.2.1",
+    "tslint": "6.0.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-eslint-rules": "5.4.0",
+    "tslint-react": "4.2.0",
+    "typescript": "3.7.5"
+  }
+}
