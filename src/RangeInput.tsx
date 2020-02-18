@@ -28,7 +28,7 @@ export const RangeInput: React.SFC<RangeInputProps> = ({
     [nameMax]: initMax,
   })
   const isMouseDown = useRef(false)
-  const rangeElement = useRef<HTMLDivElement>(null)
+  const rangeElement = useRef<HTMLFieldSetElement>(null)
   useEffect(() => {
     if (onChange) {
       onChange({
@@ -101,7 +101,7 @@ export const RangeInput: React.SFC<RangeInputProps> = ({
   }
 
   return (
-    <div className="range" ref={rangeElement}>
+    <fieldset className="range" ref={rangeElement}>
       <div className="range__track" />
       <div
         className="range__fill"
@@ -160,6 +160,6 @@ export const RangeInput: React.SFC<RangeInputProps> = ({
         <span>{localValue[nameMin]}</span>
         <span>{localValue[nameMax]}</span>
       </output>
-    </div>
+    </fieldset>
   )
 }

@@ -1,9 +1,10 @@
 .range {
+  border: none;
+  margin: 1rem;
+  padding: 0;
   position: relative;
   width: calc(100% - 2rem);
   height: 1rem;
-  padding-top: 0;
-  margin: 1rem;
 
   &__track {
     width: 100%;
