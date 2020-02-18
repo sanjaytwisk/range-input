@@ -110,52 +110,36 @@ export const RangeInput: React.FunctionComponent<RangeInputProps> = ({
           left: `${getPosition(minValue)}%`,
         }}
       />
-      <input
-        type="range"
+      <RangeThumb
         value={localValue[nameMin]}
         min={min}
         max={max}
-        step={step.toString()}
-        className="range__input"
+        step={step}
         onChange={onChangeMin}
-        id={nameMin}
         name={nameMin}
-      />
-      <label
-        className="range__label"
-        htmlFor={nameMin}
-        style={{ left: `calc(${getPosition(localValue[nameMin])}% - 0.5rem)` }}
+        position={getPosition(localValue[nameMin])}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
         onMouseMove={onMouseMove(nameMin)}
-        draggable={false}
       >
-        Minimum value
-      </label>
-      <input
-        type="range"
+        Maximum value
+      </RangeThumb>
+      <RangeThumb
         value={localValue[nameMax]}
         min={min}
         max={max}
-        step={step.toString()}
-        className="range__input"
+        step={step}
         onChange={onChangeMax}
-        id={nameMax}
         name={nameMax}
-      />
-      <label
-        className="range__label"
-        htmlFor={nameMax}
-        style={{ left: `calc(${getPosition(localValue[nameMax])}% - 0.5rem)` }}
+        position={getPosition(localValue[nameMax])}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
         onMouseMove={onMouseMove(nameMax)}
-        draggable={false}
       >
         Maximum value
-      </label>
+      </RangeThumb>
       <output className="range__output">
         <span>{localValue[nameMin]}</span>
         <span>{localValue[nameMax]}</span>
@@ -163,3 +147,57 @@ export const RangeInput: React.FunctionComponent<RangeInputProps> = ({
     </fieldset>
   )
 }
+
+interface RangeThumbProps {
+  name: string
+  min: number
+  max: number
+  step: number
+  value: number
+  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void
+  position: number
+  onMouseUp: () => void
+  onMouseDown: () => void
+  onMouseLeave: () => void
+  onMouseMove: (evt: React.MouseEvent<HTMLLabelElement>) => void
+}
+
+const RangeThumb: React.FunctionComponent<RangeThumbProps> = ({
+  name,
+  min,
+  max,
+  step,
+  value,
+  onChange,
+  children,
+  onMouseDown,
+  onMouseUp,
+  onMouseMove,
+  position,
+}) => (
+  <>
+    <input
+      type="range"
+      value={value}
+      min={min}
+      max={max}
+      step={step.toString()}
+      className="range__input"
+      onChange={onChange}
+      id={name}
+      name={name}
+    />
+    <label
+      className="range__label"
+      htmlFor={name}
+      style={{ left: `calc(${position}% - 0.5rem)` }}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onMouseMove={onMouseMove}
+      draggable={false}
+    >
+      {children}
+    </label>
+  </>
+)
