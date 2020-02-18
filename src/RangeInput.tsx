@@ -12,7 +12,7 @@ export interface RangeInputProps {
   onChange?: (change: { name: string; value: [number, number] }) => void
 }
 
-export const RangeInput: React.SFC<RangeInputProps> = ({
+export const RangeInput: React.FunctionComponent<RangeInputProps> = ({
   name,
   value,
   min,
