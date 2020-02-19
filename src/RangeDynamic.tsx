@@ -4,10 +4,10 @@ import { RangeFill } from './RangeFill'
 import { getPosition } from './utils'
 
 import './multi-range.css'
-import { MockEvent } from './'
+import { MockEvent } from '.'
 import { RangeTrack } from './RangeTrack'
 
-export interface MultiRangeProps {
+export interface RangeDynamicProps {
   name: string
   min: number
   max: number
@@ -16,7 +16,7 @@ export interface MultiRangeProps {
   onChange?: (evt: MockEvent<number>) => void
 }
 
-export const MultiRange: React.FunctionComponent<MultiRangeProps> = ({
+export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
   name,
   value,
   min,

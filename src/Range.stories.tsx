@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { withA11y } from '@storybook/addon-a11y'
 import { Range } from './Range'
-import { MultiRange } from './MultiRange'
+import { RangeDynamic } from './RangeDynamic'
 
 export default {
   title: 'Range',
@@ -34,7 +34,7 @@ export const multi = () => {
     setValue({ ...value, [evt.target.name]: evt.target.value })
   }
   return (
-    <MultiRange
+    <RangeDynamic
       name="multi"
       step={1}
       min={5}
