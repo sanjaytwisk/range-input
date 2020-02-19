@@ -30,7 +30,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   defaultValue,
   onChange,
   onValidate = () => true,
-  withFill,
+  withFill = true,
   withTrack = true,
   children,
 }) => {

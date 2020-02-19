@@ -48,6 +48,7 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
         onValidate={validateMin}
         name={nameMin}
         withTrack={false}
+        withFill={false}
       >
         Maximum value
       </Range>
@@ -60,6 +61,7 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
         onValidate={validateMax}
         name={nameMax}
         withTrack={false}
+        withFill={false}
       >
         Maximum value
       </Range>
