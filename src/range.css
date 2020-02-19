@@ -1,8 +1,80 @@
 .range {
   margin: 0.5rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
-  .multi-range & {
+  &__input {
+    appearance: none;
+    background-color: grey;
+    height: 2px;
+    margin: 1rem 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 1rem;
+    background: tomato;
+    transition: box-shadow 0.2s ease;
+    cursor: grab;
+  }
+
+  &__input::-moz-range-thumb {
+    -moz-appearance: none;
+    border: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 1rem;
+    background: tomato;
+    transition: box-shadow 0.2s ease;
+    cursor: grab;
+  }
+
+  &__input::-ms-thumb {
+    -ms-appearance: none;
+    border: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 1rem;
+    background: tomato;
+    transition: box-shadow 0.2s ease;
+    cursor: grab;
+  }
+
+  &__input:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    cursor: grabbing;
+  }
+  &__input:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    cursor: grabbing;
+  }
+
+  &__input:focus::-ms-thumb {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    cursor: grabbing;
+  }
+
+  &__input::-moz-focus-outer {
+    border: none;
+  }
+
+  &__label {
+    order: -1;
+  }
+
+  .has-js & {
+    display: block;
+  }
+
+  .has-js .multi-range & {
     background: transparent;
     position: absolute;
     margin: 0;
@@ -11,7 +83,7 @@
     transform: translateY(-50%);
   }
 
-  &__input {
+  .has-js &__input {
     pointer-events: none;
     appearance: none;
     background: transparent;
@@ -25,8 +97,8 @@
     opacity: 0;
   }
 
-  &__input:focus + &__label,
-  &__input:active + &__label {
+  .has-js &__input:focus + &__label,
+  .has-js &__input:active + &__label {
     background: tomato;
 
     &::before {
@@ -35,7 +107,7 @@
     }
   }
 
-  &__input:active + &__label {
+  .has-js &__input:active + &__label {
     cursor: grabbing;
     &::after {
       width: 5000%;
@@ -45,18 +117,17 @@
     }
   }
 
-  &__input::-webkit-slider-thumb,
-  &__input::-moz-range-thumb,
-  &__input::-ms-thumb {
-    -webkit-appearance: none;
+  .has-js &__input::-webkit-slider-thumb,
+  .has-js &__input::-moz-range-thumb,
+  .has-js &__input::-ms-thumb {
+    appearance: none;
     outline: none;
     background: tomato;
     border: none;
-    transform: translateX(20px);
     display: none;
   }
 
-  &__label {
+  .has-js &__label {
     display: block;
     width: 1rem;
     height: 1rem;

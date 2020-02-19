@@ -1,6 +1,11 @@
 .range-track {
+  display: none;
   width: 100%;
   height: 2px;
   background: grey;
   border-radius: 2px;
+
+  .has-js & {
+    display: block;
+  }
 }

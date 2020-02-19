@@ -1,7 +1,12 @@
 .range-fill {
+  display: none;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   height: 2px;
   background-color: rebeccapurple;
+
+  .has-js & {
+    display: block;
+  }
 }

@@ -7,6 +7,7 @@ import './range.css'
 import { MockEvent } from './'
 import { RangeFill } from './RangeFill'
 import { RangeTrack } from './RangeTrack'
+import { useJS } from './useJS'
 
 export interface RangeProps {
   name: string
@@ -34,6 +35,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   withTrack = true,
   children,
 }) => {
+  useJS()
   const rangeElement = useRef<HTMLDivElement>(null)
   const isMouseDown = useRef(false)
   const onMouseDown = () => {
