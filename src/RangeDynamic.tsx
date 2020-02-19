@@ -29,8 +29,8 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
   const minValue = value[nameMin] || min
   const maxValue = value[nameMax] || max
 
-  const validateMin = (value: number) => value < maxValue
-  const validateMax = (value: number) => value > minValue
+  const validateMin = (nextValue: number) => nextValue < maxValue
+  const validateMax = (nextValue: number) => nextValue > minValue
 
   const fillStart = getPosition(minValue, max, min)
   const fillEnd = getPosition(maxValue, max, min)
