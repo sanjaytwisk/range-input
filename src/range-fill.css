@@ -1,0 +1,7 @@
+.range-fill {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 2px;
+  background-color: rebeccapurple;
+}
