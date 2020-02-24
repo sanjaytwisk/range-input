@@ -41,16 +41,28 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   const onMouseDown = () => {
     isMouseDown.current = true
   }
-  const onMouseUp = (evt: any) => {
+  const onMouseUp = () => {
     isMouseDown.current = false
   }
   const validateValue = (nextValue: number) => {
     return nextValue <= max && nextValue >= min && onValidate(nextValue)
   }
   const onMouseMove = (evt: React.MouseEvent<HTMLLabelElement>) => {
-    if (isMouseDown.current && rangeElement.current) {
+    if (isMouseDown.current) {
+      onTrackUpdate(evt.clientX)
+    }
+  }
+
+  const onClick = (evt: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current) {
+      onTrackUpdate(evt.clientX)
+    }
+  }
+
+  const onTrackUpdate = (clientX: number) => {
+    if (rangeElement.current) {
       const rangeElementClient = rangeElement.current.getBoundingClientRect()
-      const dragPosition = evt.clientX - rangeElementClient.left
+      const dragPosition = clientX - rangeElementClient.left
       const nextValue = getValueByPosition(
         dragPosition,
         rangeElementClient.width
@@ -80,7 +92,11 @@ export const Range: React.FunctionComponent<RangeProps> = ({
     )
   }
   return (
-    <div className="range" ref={rangeElement}>
+    <div
+      className="range"
+      ref={rangeElement}
+      onClick={withTrack ? onClick : undefined}
+    >
       {withTrack && <RangeTrack />}
       {withFill && (
         <RangeFill
