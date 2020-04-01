@@ -111,12 +111,6 @@
 
   .has-js &__input:active + &__label {
     cursor: grabbing;
-    &::after {
-      width: 5000%;
-      height: 800%;
-      top: -350%;
-      left: -2450%;
-    }
   }
 
   .has-js &__input::-webkit-slider-thumb,

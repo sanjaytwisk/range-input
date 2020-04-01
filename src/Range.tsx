@@ -35,6 +35,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
 }) => {
   useJS()
   const rangeElement = useRef<HTMLDivElement>(null)
+  const valueRef = useRef(value)
   const isMouseDown = useRef(false)
   const onMouseDown = () => {
     isMouseDown.current = true
@@ -45,7 +46,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   const validateValue = (nextValue: number) => {
     return nextValue <= max && nextValue >= min && onValidate(nextValue)
   }
-  const onMouseMove = (evt: React.MouseEvent<HTMLLabelElement>) => {
+  const onMouseMove = (evt: MouseEvent) => {
     if (isMouseDown.current) {
       onTrackUpdate(evt.clientX)
     }
@@ -59,13 +60,10 @@ export const Range: React.FunctionComponent<RangeProps> = ({
 
   const onTrackUpdate = (clientX: number) => {
     if (rangeElement.current) {
-      const rangeElementClient = rangeElement.current.getBoundingClientRect()
-      const dragPosition = clientX - rangeElementClient.left
-      const nextValue = getValueByPosition(
-        dragPosition,
-        rangeElementClient.width
-      )
-      const currentValue = value
+      const { left, width } = rangeElement.current.getBoundingClientRect()
+      const dragPosition = clientX - left
+      const nextValue = getValueByPosition(dragPosition, width)
+      const currentValue = valueRef.current
       if (
         nextValue !== currentValue &&
         Math.round(nextValue % step) === 0 &&
@@ -89,6 +87,20 @@ export const Range: React.FunctionComponent<RangeProps> = ({
       Math.round((position / stepSizePixel) * step * roundTo) / roundTo + min
     )
   }
+
+  useEffect(() => {
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [])
+
+  useEffect(() => {
+    valueRef.current = value
+  }, [value])
+
   return (
     <div
       className="range"
@@ -121,9 +133,6 @@ export const Range: React.FunctionComponent<RangeProps> = ({
           left: `calc(${getPosition(value || min, max, min)}% - 0.5rem)`,
         }}
         onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-        onMouseMove={onMouseMove}
         draggable={false}
       >
         {children}
