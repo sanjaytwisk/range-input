@@ -1,7 +1,5 @@
-import * as React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { getPosition } from './utils'
-
-const { useRef } = React
 
 import './range.css'
 import { MockEvent } from './'

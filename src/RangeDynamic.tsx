@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Range } from './Range'
 import { RangeFill } from './RangeFill'
 import { getPosition } from './utils'
