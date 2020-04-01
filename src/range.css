@@ -113,7 +113,7 @@
     opacity: 0;
   }
 
-  [data-has-js] &__input:focus + &__label,
+  [data-has-js][data-input-keyboard] &__input:focus + &__label,
   [data-has-js] &__input:active + &__label {
     background: var(--thumb-color-focus);
 
