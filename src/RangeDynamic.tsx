@@ -1,7 +1,7 @@
 import React from 'react'
 import { Range } from './Range'
 import { RangeFill } from './RangeFill'
-import { getPosition } from './utils'
+import { valueToPosition } from './utils'
 
 import './multi-range.css'
 import { MockEvent } from '.'
@@ -32,8 +32,8 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
   const validateMin = (nextValue: number) => nextValue < maxValue
   const validateMax = (nextValue: number) => nextValue > minValue
 
-  const fillStart = getPosition(minValue, max, min)
-  const fillEnd = getPosition(maxValue, max, min)
+  const fillStart = valueToPosition(minValue, { min, max, step })
+  const fillEnd = valueToPosition(maxValue, { min, max, step })
 
   return (
     <fieldset className="multi-range">

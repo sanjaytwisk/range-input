@@ -31,7 +31,10 @@ export const single = () => {
 export const multi = () => {
   const [value, setValue] = React.useState({})
   const onChange = (evt: any) => {
-    setValue({ ...value, [evt.target.name]: evt.target.value })
+    setValue(previousValue => ({
+      ...previousValue,
+      [evt.target.name]: evt.target.value,
+    }))
   }
   return (
     <RangeDynamic

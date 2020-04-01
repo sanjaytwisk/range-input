@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { getPosition } from './utils'
+import React, { useLayoutEffect, useRef, useCallback } from 'react'
+import { valueToPosition, onTrackUpdate, validateValue } from './utils'
 
 import './range.css'
 import { MockEvent } from './'
@@ -25,93 +25,78 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   min,
   max,
   step,
-  value,
+  value = min,
   defaultValue,
-  onChange,
-  onValidate = () => true,
+  onChange = () => null,
+  onValidate,
   withFill = true,
   withTrack = true,
   children,
 }) => {
   useJS()
   const rangeElement = useRef<HTMLDivElement>(null)
-  const valueRef = useRef(value)
   const isMouseDown = useRef(false)
+  const getOptions = () => ({
+    name,
+    min,
+    max,
+    step,
+    element: rangeElement.current,
+    onValidate,
+  })
+
   const onMouseDown = () => {
     isMouseDown.current = true
   }
+
   const onMouseUp = () => {
     isMouseDown.current = false
   }
-  const validateValue = (nextValue: number) => {
-    return nextValue <= max && nextValue >= min && onValidate(nextValue)
-  }
-  const onMouseMove = (evt: MouseEvent) => {
-    if (isMouseDown.current) {
-      onTrackUpdate(evt.clientX)
-    }
-  }
 
-  const onClick = (evt: React.MouseEvent<HTMLDivElement>) => {
-    if (!isMouseDown.current) {
-      onTrackUpdate(evt.clientX)
-    }
-  }
-
-  const onTrackUpdate = (clientX: number) => {
-    if (rangeElement.current) {
-      const { left, width } = rangeElement.current.getBoundingClientRect()
-      const dragPosition = clientX - left
-      const nextValue = getValueByPosition(dragPosition, width)
-      const currentValue = valueRef.current
-      if (
-        nextValue !== currentValue &&
-        Math.round(nextValue % step) === 0 &&
-        validateValue(nextValue) &&
-        onChange
-      ) {
-        onChange({ target: { name, value: nextValue } })
+  const onMouseMove = useCallback(
+    (evt: MouseEvent) => {
+      if (isMouseDown.current) {
+        onTrackUpdate(evt.clientX, value, getOptions(), onChange)
       }
-    }
-  }
+    },
+    [value]
+  )
+
+  const onClick = useCallback(
+    (evt: React.MouseEvent<HTMLDivElement>) => {
+      if (!isMouseDown.current) {
+        onTrackUpdate(evt.clientX, value, getOptions(), onChange)
+      }
+    },
+    [value]
+  )
+
   const onInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = parseFloat(evt.currentTarget.value)
-    if (!validateValue(nextValue) || !onChange) return
+    if (!validateValue(nextValue, getOptions()) || !onChange) return
     onChange({ target: { name, value: nextValue } })
   }
-  const getValueByPosition = (position: number, width: number): number => {
-    const steps = (max - min) / step
-    const stepSizePixel = width / steps
-    const roundTo = step < 1 ? 10 : 1
-    return (
-      Math.round((position / stepSizePixel) * step * roundTo) / roundTo + min
-    )
-  }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)
     return () => {
       document.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseup', onMouseUp)
     }
-  }, [])
-
-  useEffect(() => {
-    valueRef.current = value
   }, [value])
 
   return (
     <div
-      className="range"
+      className={`range${withTrack ? ' range--clickable' : ''}`}
       ref={rangeElement}
       onClick={withTrack ? onClick : undefined}
     >
       {withTrack && <RangeTrack />}
       {withFill && (
         <RangeFill
-          start={getPosition(min, max, min)}
-          end={getPosition(value || defaultValue || min, max, min)}
+          start={valueToPosition(min, getOptions())}
+          end={valueToPosition(value || defaultValue || min, getOptions())}
         />
       )}
       <input
@@ -130,7 +115,10 @@ export const Range: React.FunctionComponent<RangeProps> = ({
         className="range__label"
         htmlFor={name}
         style={{
-          left: `calc(${getPosition(value || min, max, min)}% - 0.5rem)`,
+          left: `calc(${valueToPosition(
+            value || min,
+            getOptions()
+          )}% - 0.5rem)`,
         }}
         onMouseDown={onMouseDown}
         draggable={false}
