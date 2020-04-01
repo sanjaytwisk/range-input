@@ -5,7 +5,7 @@
   background: var(--range-track-color, grey);
   border-radius: var(--range-track-height, 2px);
 
-  .has-js & {
+  [data-has-js] & {
     display: block;
   }
 }

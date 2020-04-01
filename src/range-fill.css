@@ -6,7 +6,7 @@
   height: var(--range-track-height, 2px);
   background-color: var(--range-fill-color, black);
 
-  .has-js & {
+  [data-has-js] & {
     display: block;
   }
 }

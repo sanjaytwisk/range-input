@@ -85,11 +85,11 @@
     order: -1;
   }
 
-  .has-js & {
+  [data-has-js] & {
     display: block;
   }
 
-  .has-js .multi-range & {
+  [data-has-js] .multi-range & {
     background: transparent;
     position: absolute;
     margin: 0;
@@ -99,7 +99,7 @@
     transform: translateY(-50%);
   }
 
-  .has-js &__input {
+  [data-has-js] &__input {
     pointer-events: none;
     appearance: none;
     background: transparent;
@@ -113,8 +113,8 @@
     opacity: 0;
   }
 
-  .has-js &__input:focus + &__label,
-  .has-js &__input:active + &__label {
+  [data-has-js] &__input:focus + &__label,
+  [data-has-js] &__input:active + &__label {
     background: var(--thumb-color-focus);
 
     &::before {
@@ -122,20 +122,20 @@
     }
   }
 
-  .has-js &__input:active + &__label {
+  [data-has-js] &__input:active + &__label {
     cursor: grabbing;
   }
 
-  .has-js &__input::-webkit-slider-thumb,
-  .has-js &__input::-moz-range-thumb,
-  .has-js &__input::-ms-thumb {
+  [data-has-js] &__input::-webkit-slider-thumb,
+  [data-has-js] &__input::-moz-range-thumb,
+  [data-has-js] &__input::-ms-thumb {
     appearance: none;
     outline: none;
     border: none;
     display: none;
   }
 
-  .has-js &__label {
+  [data-has-js] &__label {
     display: block;
     width: var(--range-thumb-size, 1rem);
     height: var(--range-thumb-size, 1rem);

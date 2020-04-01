@@ -61,3 +61,9 @@ export const positionToValue = (
 export const valueToPosition = (value: number, { max, min }: Bounds) => {
   return ((value - min) / (max - min)) * 100
 }
+
+export const withJS = () => {
+  if (!document.documentElement.hasAttribute('data-has-js')) {
+    document.documentElement.setAttribute('data-has-js', '')
+  }
+}
