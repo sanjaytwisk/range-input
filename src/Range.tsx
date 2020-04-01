@@ -115,10 +115,10 @@ export const Range: React.FunctionComponent<RangeProps> = ({
         className="range__label"
         htmlFor={name}
         style={{
-          left: `calc(${valueToPosition(
+          ['--range-thumb-left' as any]: `${valueToPosition(
             value || min,
             getOptions()
-          )}% - 0.5rem)`,
+          )}%`,
         }}
         onMouseDown={onMouseDown}
         draggable={false}

@@ -1,5 +1,12 @@
 .range {
-  margin: 0.5rem;
+  --range-thumb-offset: calc(var(--range-thumb-size, 1rem) / 2);
+  --thumb-size: var(--range-thumb-size, 1rem);
+  --thumb-radius: var(--range-thumb-radius, var(--thumb-size));
+  --thumb-color: var(--range-thumb-color, black);
+  --thumb-color-focus: var(--range-thumb-color-focus, black);
+  --focus-size: var(--range-focus-size, 2px);
+  --focus-color: var(--range-focus-color, grey);
+  margin: var(--range-thumb-offset);
   padding: 0.5rem 0;
   position: relative;
   display: flex;
@@ -11,8 +18,8 @@
 
   &__input {
     appearance: none;
-    background-color: grey;
-    height: 2px;
+    background-color: var(--range-track-color, grey);
+    height: var(--range-track-height, 2px);
     margin: 1rem 0;
 
     &:focus {
@@ -23,10 +30,10 @@
   &__input::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 1rem;
-    background: tomato;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    border-radius: var(--thumb-radius);
+    background: var(--thumb-color);
     transition: box-shadow 0.2s ease;
     cursor: grab;
   }
@@ -34,10 +41,10 @@
   &__input::-moz-range-thumb {
     -moz-appearance: none;
     border: none;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 1rem;
-    background: tomato;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    border-radius: var(--thumb-radius);
+    background: var(--thumb-color);
     transition: box-shadow 0.2s ease;
     cursor: grab;
   }
@@ -45,25 +52,28 @@
   &__input::-ms-thumb {
     -ms-appearance: none;
     border: none;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 1rem;
-    background: tomato;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    border-radius: var(--thumb-radius);
+    background: var(--thumb-color);
     transition: box-shadow 0.2s ease;
     cursor: grab;
   }
 
   &__input:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+    background: var(--thumb-color-focus);
     cursor: grabbing;
   }
   &__input:focus::-moz-range-thumb {
-    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+    background: var(--thumb-color-focus);
     cursor: grabbing;
   }
 
   &__input:focus::-ms-thumb {
-    box-shadow: 0 0 0 2px white, 0 0 0 4px tomato;
+    box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+    background: var(--thumb-color-focus);
     cursor: grabbing;
   }
 
@@ -105,11 +115,10 @@
 
   .has-js &__input:focus + &__label,
   .has-js &__input:active + &__label {
-    background: tomato;
+    background: var(--thumb-color-focus);
 
     &::before {
-      transform: scale(1);
-      opacity: 1;
+      box-shadow: 0 0 0 var(--focus-size) var(--focus-color, grey);
     }
   }
 
@@ -122,23 +131,20 @@
   .has-js &__input::-ms-thumb {
     appearance: none;
     outline: none;
-    background: tomato;
     border: none;
     display: none;
   }
 
   .has-js &__label {
     display: block;
-    width: 1rem;
-    height: 1rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 1rem;
+    width: var(--range-thumb-size, 1rem);
+    height: var(--range-thumb-size, 1rem);
+    border-radius: var(--range-thumb-radius, var(--range-thumb-size, 1rem));
     position: absolute;
     top: 50%;
-    left: 0;
+    left: calc(var(--range-thumb-left) - var(--range-thumb-offset));
     transform: translateY(-50%);
-    background: rebeccapurple;
+    background: var(--range-thumb-color, black);
     cursor: grab;
     transition: background-color 0.2s ease;
     text-indent: -9999px;
@@ -147,25 +153,25 @@
     &::after {
       content: '';
       position: absolute;
-      width: 400%;
-      height: 400%;
-      top: -150%;
-      left: -150%;
+      width: 4rem;
+      height: 4rem;
+      top: calc(-2rem + 50%);
+      left: calc(-2rem + 50%);
       z-index: 1;
     }
 
     &::before {
+      --focus-offset: var(--range-focus-offset, 0rem);
+      --focus-transition: var(--range-focus-transition, 0.2s ease);
       content: '';
       position: absolute;
-      width: calc(100% + 0.25rem);
-      height: calc(100% + 0.25rem);
-      left: -0.125rem;
-      top: -0.125rem;
-      box-shadow: 0 0 0 2px tomato;
-      border-radius: 2rem;
-      transform: scale(0.5);
-      opacity: 0;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      width: calc(100% + var(--focus-offset));
+      height: calc(100% + var(--focus-offset));
+      left: calc(var(--focus-offset) / -2);
+      top: calc(var(--focus-offset) / -2);
+      box-shadow: none;
+      border-radius: var(--range-thumb-radius, var(--range-thumb-size, 1rem));
+      transition: box-shadow 0.2s ease;
     }
   }
 }

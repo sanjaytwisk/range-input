@@ -3,8 +3,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  height: 2px;
-  background-color: rebeccapurple;
+  height: var(--range-track-height, 2px);
+  background-color: var(--range-fill-color, black);
 
   .has-js & {
     display: block;
