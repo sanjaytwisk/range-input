@@ -1,6 +1,6 @@
 .multi-range {
   border: none;
-  padding: 0;
+  padding: 0.5rem 0;
   margin: 0.5rem;
   position: relative;
   width: calc(100% - 1rem);
