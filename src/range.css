@@ -4,6 +4,7 @@
   --thumb-radius: var(--range-thumb-radius, var(--thumb-size));
   --thumb-color: var(--range-thumb-color, black);
   --thumb-color-focus: var(--range-thumb-color-focus, black);
+  --thumb-color-active: var(--range-thumb-color-active, grey);
   --focus-size: var(--range-focus-size, 2px);
   --focus-color: var(--range-focus-color, grey);
   margin: var(--range-thumb-offset);
@@ -63,17 +64,28 @@
   &__input:focus::-webkit-slider-thumb {
     box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
     background: var(--thumb-color-focus);
-    cursor: grabbing;
   }
   &__input:focus::-moz-range-thumb {
     box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
     background: var(--thumb-color-focus);
-    cursor: grabbing;
   }
 
   &__input:focus::-ms-thumb {
     box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
     background: var(--thumb-color-focus);
+  }
+
+  &__input:active::-webkit-slider-thumb {
+    background: var(--thumb-color-active);
+    cursor: grabbing;
+  }
+  &__input:active::-moz-range-thumb {
+    background: var(--thumb-color-active);
+    cursor: grabbing;
+  }
+
+  &__input:active::-ms-thumb {
+    background: var(--thumb-color-active);
     cursor: grabbing;
   }
 
@@ -113,8 +125,11 @@
     opacity: 0;
   }
 
-  [data-has-js][data-input-keyboard] &__input:focus + &__label,
   [data-has-js] &__input:active + &__label {
+    background: var(--thumb-color-active, grey);
+  }
+
+  [data-has-js][data-input-keyboard] &__input:focus + &__label {
     background: var(--thumb-color-focus);
 
     &::before {
