@@ -1,5 +1,5 @@
 import { RangeState, Range } from './Range'
-import { getElement } from './utils'
+import { getElement, Rect } from './utils'
 import { Fill } from './Fill'
 
 export class Elements {
@@ -20,8 +20,12 @@ export class Elements {
     return new Elements(rangeInstance, range, input, thumb, fill)
   }
 
-  private isMouseDown = false
   private fill: Fill
+  private timeout = 0
+  private state: { rect: Rect; isMouseDown: boolean } = {
+    rect: { left: 0, width: 0 },
+    isMouseDown: false,
+  }
 
   constructor(
     private rangeInstane: Range,
@@ -31,6 +35,7 @@ export class Elements {
     fillElement: HTMLDivElement | null
   ) {
     this.addEventListeners()
+    this.setRect()
     if (fillElement) {
       this.fill = new Fill(fillElement)
     }
@@ -42,6 +47,7 @@ export class Elements {
     this.input.addEventListener('change', this.onInputChange)
     document.addEventListener('mouseup', this.onMouseUp)
     document.addEventListener('mousemove', this.onMouseMove)
+    window.addEventListener('resize', this.onResize)
   }
 
   private removeEventListeners() {
@@ -50,14 +56,15 @@ export class Elements {
     this.input.removeEventListener('change', this.onInputChange)
     document.removeEventListener('mouseup', this.onMouseUp)
     document.removeEventListener('mousemove', this.onMouseMove)
+    window.removeEventListener('resize', this.onResize)
   }
 
   private onMouseDown = () => {
-    this.isMouseDown = true
+    this.state.isMouseDown = true
   }
 
   private onMouseUp = () => {
-    this.isMouseDown = false
+    this.state.isMouseDown = false
   }
 
   private onClick = (evt: MouseEvent) => {
@@ -67,7 +74,7 @@ export class Elements {
 
   private onMouseMove = (evt: MouseEvent) => {
     const { clientX } = evt
-    if (this.isMouseDown) {
+    if (this.state.isMouseDown) {
       this.rangeInstane.setPosition(clientX)
     }
   }
@@ -77,6 +84,18 @@ export class Elements {
     if (!target) return
     const nextValue = parseFloat(target.value)
     this.rangeInstane.setValue(nextValue)
+  }
+
+  private onResize = () => {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+    this.timeout = window.setTimeout(this.setRect, 400)
+  }
+
+  private setRect = () => {
+    const { left, width } = this.range.getBoundingClientRect()
+    this.state.rect = { left, width }
   }
 
   public update({ value, position }: RangeState) {
@@ -91,8 +110,7 @@ export class Elements {
     this.removeEventListeners()
   }
 
-  public getRect() {
-    const { left, width } = this.range.getBoundingClientRect()
-    return { left, width }
+  public get rect() {
+    return this.state.rect
   }
 }

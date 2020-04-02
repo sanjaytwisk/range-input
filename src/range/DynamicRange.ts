@@ -86,6 +86,11 @@ export class DynamicRange {
     })
   }
 
+  public destroy() {
+    this.rangeInstances.max.destroy()
+    this.rangeInstances.min.destroy()
+  }
+
   public get value() {
     return {
       min: this.rangeInstances.min.value,

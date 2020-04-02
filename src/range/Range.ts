@@ -1,10 +1,4 @@
-import {
-  valueToPosition,
-  Rect,
-  getNextValue,
-  isValidValue,
-  Validator,
-} from './utils'
+import { valueToPosition, getNextValue, isValidValue, Validator } from './utils'
 import { Elements } from './Elements'
 import { MockEvent } from 'index'
 
@@ -30,7 +24,6 @@ export interface RangeState {
 export class Range {
   private elements: Elements
   private state: RangeState
-  private rect: Rect
 
   public static create(options: Options, init: Init = {}) {
     return new Range(options, init)
@@ -38,7 +31,6 @@ export class Range {
 
   constructor(private options: Options, init: Init = {}) {
     this.elements = Elements.create(options.selector, this)
-    this.rect = this.elements.getRect()
     this.update(init.value || options.min, this.options)
   }
 
@@ -65,10 +57,18 @@ export class Range {
   }
 
   public setPosition(nextPosition: number) {
-    const nextValue = getNextValue(nextPosition, this.rect, this.options)
+    const nextValue = getNextValue(
+      nextPosition,
+      this.elements.rect,
+      this.options
+    )
     if (isValidValue(nextValue, this.state.value, this.options)) {
       this.setValue(nextValue)
     }
+  }
+
+  public destroy() {
+    this.elements.destroy()
   }
 
   public get value() {

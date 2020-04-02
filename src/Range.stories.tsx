@@ -63,6 +63,10 @@ export const vanilla = () => {
   }
   useEffect(() => {
     range.current = RangeVanilla.create(options, { value: 5 })
+
+    return () => {
+      range.current?.destroy()
+    }
   }, [])
   return (
     <div data-range="" className="range">
@@ -102,6 +106,10 @@ export const vanillaMulti = () => {
   }
   useEffect(() => {
     range.current = DynamicRange.create(options, { min: 5, max: 10 })
+
+    return () => {
+      range.current?.destroy()
+    }
   }, [])
   return (
     <div className="multi-range" data-multi-range="">
