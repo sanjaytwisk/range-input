@@ -1,6 +1,12 @@
 import { valueToPosition, getNextValue, isValidValue, Validator } from './utils'
 import { Elements } from './Elements'
-import { MockEvent } from 'index'
+
+export type MockEvent<T = string> = {
+  target: {
+    name: string
+    value: T
+  }
+}
 
 export interface Init {
   value?: number

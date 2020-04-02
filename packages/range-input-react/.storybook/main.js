@@ -19,7 +19,7 @@ module.exports = {
       if (rule.test.toString().includes('css')) {
         return {
           ...rule,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: ['style-loader', 'css-loader'],
         }
       }
       return rule

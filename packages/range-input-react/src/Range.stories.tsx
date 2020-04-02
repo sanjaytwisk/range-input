@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { withA11y } from '@storybook/addon-a11y'
 import { Range } from './Range'
 import { RangeDynamic } from './RangeDynamic'
-import { Range as RangeVanilla } from './range/Range'
-import { DynamicRange } from './range/DynamicRange'
+import { Range as RangeVanilla, DynamicRange } from '@twisk/range-input'
 import { useJS } from './useJS'
 
 export default {

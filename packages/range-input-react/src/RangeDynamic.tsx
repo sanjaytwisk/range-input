@@ -1,10 +1,8 @@
 import React from 'react'
 import { Range } from './Range'
 import { RangeFill } from './RangeFill'
-import { valueToPosition } from './range/utils'
+import { valueToPosition, MockEvent } from '@twisk/range-input'
 
-import './multi-range.css'
-import { MockEvent } from '.'
 import { RangeTrack } from './RangeTrack'
 
 export interface RangeDynamicProps {

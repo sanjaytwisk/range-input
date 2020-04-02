@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "dist/lib",
+    "outDir": "dist",
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "sourceMap": true,
-    "allowJs": false,
+    "allowJs": true,
     "jsx": "react",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "rootDirs": ["src"],
     "baseUrl": "src",
     "forceConsistentCasingInFileNames": true,
@@ -22,7 +22,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "scripts"]
+  }
 }

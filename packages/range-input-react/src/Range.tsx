@@ -5,10 +5,9 @@ import {
   Rect,
   getNextValue,
   isValidValue,
-} from './range/utils'
+  MockEvent,
+} from '@twisk/range-input'
 
-import './range.css'
-import { MockEvent } from './'
 import { RangeFill } from './RangeFill'
 import { RangeTrack } from './RangeTrack'
 import { useJS } from './useJS'

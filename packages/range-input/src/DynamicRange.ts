@@ -1,6 +1,5 @@
-import { Options, Range, Init } from './Range'
+import { Options, Range, Init, MockEvent } from './Range'
 import { Fill } from './Fill'
-import { MockEvent } from 'index'
 import { valueToPosition } from './utils'
 
 interface DynamicValue {

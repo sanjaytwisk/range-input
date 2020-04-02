@@ -1,5 +1,4 @@
 import React from 'react'
-import './range-fill.css'
 
 export interface RangeFillProps {
   start: number
