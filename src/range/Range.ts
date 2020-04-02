@@ -59,6 +59,8 @@ export class Range {
   public setValue(nextValue: number) {
     if (isValidValue(nextValue, this.state.value, this.options)) {
       this.update(nextValue, this.options)
+    } else {
+      this.elements.update(this.state)
     }
   }
 

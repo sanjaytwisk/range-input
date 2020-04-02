@@ -124,7 +124,7 @@ export const vanillaMulti = () => {
           htmlFor={`${options.name}[min]`}
           draggable={false}
         >
-          Set amount
+          Set minimum amount
         </label>
       </div>
       <div data-range-max={options.name} className="range">
@@ -144,7 +144,7 @@ export const vanillaMulti = () => {
           htmlFor={`${options.name}[max]`}
           draggable={false}
         >
-          Set amount
+          Set maximum amount
         </label>
       </div>
     </div>
