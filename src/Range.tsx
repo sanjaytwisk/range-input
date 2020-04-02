@@ -85,6 +85,13 @@ export const Range: React.FunctionComponent<RangeProps> = ({
     [value]
   )
 
+  const onTouchMove = (evt: React.TouchEvent<HTMLLabelElement>) => {
+    if (isMouseDown.current) {
+      const { clientX } = evt.targetTouches[0]
+      updateValue(clientX)
+    }
+  }
+
   const onInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = parseFloat(evt.currentTarget.value)
     if (!validateValue(nextValue, getOptions()) || !onChange) return
@@ -142,6 +149,9 @@ export const Range: React.FunctionComponent<RangeProps> = ({
           )}%`,
         }}
         onMouseDown={onMouseDown}
+        onTouchStart={onMouseDown}
+        onTouchEnd={onMouseUp}
+        onTouchMove={onTouchMove}
         draggable={false}
       >
         {children}

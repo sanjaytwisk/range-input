@@ -43,6 +43,9 @@ export class Elements {
 
   private addEventListeners() {
     this.thumb.addEventListener('mousedown', this.onMouseDown)
+    this.thumb.addEventListener('touchstart', this.onMouseDown)
+    this.thumb.addEventListener('touchend', this.onMouseUp)
+    this.thumb.addEventListener('touchmove', this.onTouchMove)
     this.range.addEventListener('click', this.onClick)
     this.input.addEventListener('change', this.onInputChange)
     document.addEventListener('mouseup', this.onMouseUp)
@@ -52,6 +55,9 @@ export class Elements {
 
   private removeEventListeners() {
     this.thumb.removeEventListener('mousedown', this.onMouseDown)
+    this.thumb.removeEventListener('touchstart', this.onMouseDown)
+    this.thumb.removeEventListener('touchend', this.onMouseUp)
+    this.thumb.removeEventListener('touchmove', this.onTouchMove)
     this.range.removeEventListener('click', this.onClick)
     this.input.removeEventListener('change', this.onInputChange)
     document.removeEventListener('mouseup', this.onMouseUp)
@@ -74,6 +80,13 @@ export class Elements {
 
   private onMouseMove = (evt: MouseEvent) => {
     const { clientX } = evt
+    if (this.state.isMouseDown) {
+      this.rangeInstane.setPosition(clientX)
+    }
+  }
+
+  private onTouchMove = (evt: TouchEvent) => {
+    const { clientX } = evt.targetTouches[0]
     if (this.state.isMouseDown) {
       this.rangeInstane.setPosition(clientX)
     }
