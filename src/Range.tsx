@@ -1,5 +1,11 @@
-import React, { useLayoutEffect, useRef, useCallback } from 'react'
-import { valueToPosition, onTrackUpdate, validateValue } from './utils'
+import React, { useLayoutEffect, useEffect, useRef, useCallback } from 'react'
+import {
+  valueToPosition,
+  validateValue,
+  Rect,
+  getNextValue,
+  isValidValue,
+} from './range/utils'
 
 import './range.css'
 import { MockEvent } from './'
@@ -36,6 +42,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   useJS()
   const rangeElement = useRef<HTMLDivElement>(null)
   const isMouseDown = useRef(false)
+  const elementRect = useRef<Rect>({ left: 0, width: 0 })
   const getOptions = () => ({
     name,
     min,
@@ -53,10 +60,17 @@ export const Range: React.FunctionComponent<RangeProps> = ({
     isMouseDown.current = false
   }
 
+  const updateValue = (clientX: number) => {
+    const nextValue = getNextValue(clientX, elementRect.current, getOptions())
+    if (isValidValue(nextValue, value, getOptions())) {
+      onChange({ target: { name, value: nextValue } })
+    }
+  }
+
   const onMouseMove = useCallback(
     (evt: MouseEvent) => {
       if (isMouseDown.current) {
-        onTrackUpdate(evt.clientX, value, getOptions(), onChange)
+        updateValue(evt.clientX)
       }
     },
     [value]
@@ -65,7 +79,7 @@ export const Range: React.FunctionComponent<RangeProps> = ({
   const onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement>) => {
       if (!isMouseDown.current) {
-        onTrackUpdate(evt.clientX, value, getOptions(), onChange)
+        updateValue(evt.clientX)
       }
     },
     [value]
@@ -85,6 +99,13 @@ export const Range: React.FunctionComponent<RangeProps> = ({
       document.removeEventListener('mouseup', onMouseUp)
     }
   }, [value])
+
+  useEffect(() => {
+    if (rangeElement.current) {
+      const { left, width } = rangeElement.current.getBoundingClientRect()
+      elementRect.current = { left, width }
+    }
+  }, [])
 
   return (
     <div

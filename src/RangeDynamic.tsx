@@ -1,7 +1,7 @@
 import React from 'react'
 import { Range } from './Range'
 import { RangeFill } from './RangeFill'
-import { valueToPosition } from './utils'
+import { valueToPosition } from './range/utils'
 
 import './multi-range.css'
 import { MockEvent } from '.'
