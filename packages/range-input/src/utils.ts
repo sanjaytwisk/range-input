@@ -1,14 +1,3 @@
-export const getElement = <T extends Element>(
-  root: HTMLDivElement,
-  elementType: string
-) => {
-  const element = root.querySelector<T>(`[data-range-${elementType}]`)
-  if (!element) {
-    throw new Error(`Could not find element ${elementType}`)
-  }
-  return element
-}
-
 interface Bounds {
   min: number
   max: number
@@ -26,6 +15,17 @@ export interface Rect {
 }
 
 export type Validator = (value?: number) => boolean
+
+export const getElement = <T extends Element>(
+  root: HTMLDivElement,
+  elementType: string
+) => {
+  const element = root.querySelector<T>(`[data-range-${elementType}]`)
+  if (!element) {
+    throw new Error(`Could not find element ${elementType}`)
+  }
+  return element
+}
 
 export const validateValue = (
   nextValue: number,
@@ -57,6 +57,7 @@ export const positionToValue = (
   width: number,
   { min, max, step }: Bounds
 ): number => {
+  if (position <= 0) return min
   const steps = (max - min) / step
   const stepSizePixel = width / steps
   const roundTo = step < 1 ? 10 : 1
