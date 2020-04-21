@@ -40,15 +40,19 @@ export class Range {
     this.update(init.value || options.min, this.options)
   }
 
-  private getState = (nextValue: number, options: Options): RangeState => {
-    const value = nextValue
-    const position = valueToPosition(value, options)
-    return { value, position }
+  private getNextState = (nextValue: number, options: Options): RangeState => ({
+    value: nextValue,
+    position: valueToPosition(nextValue, options),
+  })
+
+  private setState = (nextState: RangeState) => {
+    this.state = nextState
   }
 
   private update(value: number, options: Options) {
-    this.state = this.getState(value, options)
-    this.elements.update(this.state)
+    const nextState = this.getNextState(value, options)
+    this.elements.update(nextState)
+    this.setState(nextState)
     if (this.options.onValueChange) {
       this.options.onValueChange({ target: { name: options.name, value } })
     }
