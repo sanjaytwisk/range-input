@@ -1,5 +1,5 @@
 {
-  "name": "@twisk/range-input",
+  "name": "@twisk/in-range",
   "version": "1.0.0",
   "description": "Accessible Vanilla JS Range Input Component",
   "main": "dist/index.js",

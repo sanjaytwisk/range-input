@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { withA11y } from '@storybook/addon-a11y'
 import { Range } from './Range'
 import { RangeDynamic } from './RangeDynamic'
-import { Range as RangeVanilla, DynamicRange } from '@twisk/range-input'
+import { Range as RangeVanilla, DynamicRange } from '@twisk/in-range'
 import { useJS } from './useJS'
 
 export default {
@@ -33,7 +33,7 @@ export const single = () => {
 export const multi = () => {
   const [value, setValue] = React.useState({})
   const onChange = (evt: any) => {
-    setValue(previousValue => ({
+    setValue((previousValue) => ({
       ...previousValue,
       [evt.target.name]: evt.target.value,
     }))

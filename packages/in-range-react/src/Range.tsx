@@ -6,7 +6,7 @@ import {
   getNextValue,
   isValidValue,
   MockEvent,
-} from '@twisk/range-input'
+} from '@twisk/in-range'
 
 import { RangeFill } from './RangeFill'
 import { RangeTrack } from './RangeTrack'

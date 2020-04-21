@@ -1,7 +1,7 @@
 import React from 'react'
 import { Range } from './Range'
 import { RangeFill } from './RangeFill'
-import { valueToPosition, MockEvent } from '@twisk/range-input'
+import { valueToPosition, MockEvent } from '@twisk/in-range'
 
 import { RangeTrack } from './RangeTrack'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@twisk/range-input-react",
+  "name": "@twisk/in-range-react",
   "version": "1.0.0",
   "description": "Accessible React Range Input Component",
   "main": "dist/index.js",
@@ -18,7 +18,7 @@
     "react-dom": ">= 16.8.0"
   },
   "dependencies": {
-    "@twisk/range-input": "1.0.0"
+    "@twisk/in-range": "1.0.0"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "5.3.18",

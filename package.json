@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "dev": "yarn dev:js & yarn dev:react",
-    "dev:react": "yarn workspace @twisk/range-input-react dev",
-    "dev:js": "yarn workspace @twisk/range-input dev",
+    "dev:react": "yarn workspace @twisk/in-range-react dev",
+    "dev:js": "yarn workspace @twisk/in-range dev",
     "build": "yarn build:js && yarn build:react",
-    "build:js": "yarn workspace @twisk/range-input build",
-    "build:react": "yarn workspace @twisk/range-input-react build",
+    "build:js": "yarn workspace @twisk/in-range build",
+    "build:react": "yarn workspace @twisk/in-range-react build",
     "lint:ts": "tslint -c tslint.json -t stylish --fix packages/**/*.{ts,tsx}",
     "lint:types": "tsc --noEmit"
   },
