@@ -1,0 +1,4 @@
+{
+  "jest.pathToJest": "yarn test",
+  "jest.rootPath": "./packages/in-range"
+}
