@@ -28,7 +28,7 @@ export class Elements {
   }
 
   constructor(
-    private rangeInstane: Range,
+    private rangeInstance: Range,
     private range: HTMLDivElement,
     private input: HTMLInputElement,
     private thumb: HTMLLabelElement,
@@ -75,20 +75,20 @@ export class Elements {
 
   private onClick = (evt: MouseEvent) => {
     const { clientX } = evt
-    this.rangeInstane.setPosition(clientX)
+    this.rangeInstance.setPosition(clientX)
   }
 
   private onMouseMove = (evt: MouseEvent) => {
     const { clientX } = evt
     if (this.state.isMouseDown) {
-      this.rangeInstane.setPosition(clientX)
+      this.rangeInstance.setPosition(clientX)
     }
   }
 
   private onTouchMove = (evt: TouchEvent) => {
     const { clientX } = evt.targetTouches[0]
     if (this.state.isMouseDown) {
-      this.rangeInstane.setPosition(clientX)
+      this.rangeInstance.setPosition(clientX)
     }
   }
 
@@ -96,7 +96,7 @@ export class Elements {
     const target = evt.target as HTMLInputElement
     if (!target) return
     const nextValue = parseFloat(target.value)
-    this.rangeInstane.setValue(nextValue)
+    this.rangeInstance.setValue(nextValue)
   }
 
   private onResize = () => {
