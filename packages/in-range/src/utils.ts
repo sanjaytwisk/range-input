@@ -1,4 +1,7 @@
-interface Bounds {
+import { Value, Store } from './Store'
+import { Fill } from './Fill'
+
+export interface Bounds {
   min: number
   max: number
   step: number
@@ -16,15 +19,44 @@ export interface Rect {
 
 export type Validator = (value?: number) => boolean
 
-export const getElement = <T extends Element>(
-  root: HTMLDivElement,
-  elementType: string
+export const getRootElement = <T extends HTMLElement>(
+  selector: string | HTMLElement
 ) => {
-  const element = root.querySelector<T>(`[data-range-${elementType}]`)
+  if (typeof selector !== 'string') return selector
+  const element = document.querySelector<T>(selector)
   if (!element) {
-    throw new Error(`Could not find element ${elementType}`)
+    throw new Error(`Could not find root element for selector ${selector}`)
   }
   return element
+}
+
+export const getElement = <T extends HTMLElement>(
+  root: HTMLElement,
+  selector: string
+) => {
+  const element = root.querySelector<T>(selector)
+  if (!element) {
+    throw new Error(`Could not find element ${selector}`)
+  }
+  return element
+}
+
+export const getElements = (selector: string | HTMLElement) => {
+  const root = getRootElement(selector)
+  const thumb = getElement<HTMLLabelElement>(root, '[data-range-thumb]')
+  const input = getElement<HTMLInputElement>(root, '[data-range-input]')
+  const fill = document.querySelector<HTMLElement>('[data-range-fill]')
+  return { root, thumb, input, fill }
+}
+
+export const createFill = <T extends HTMLElement>(
+  element: T | null,
+  store: Store,
+  bounds: Bounds
+) => {
+  if (!element) return () => null
+  const fillInstance = new Fill(element, bounds)
+  return store.subscribe(fillInstance.update)
 }
 
 export const validateValue = (
@@ -32,7 +64,7 @@ export const validateValue = (
   { min, max, onValidate = () => true }: Options
 ) => {
   const isValid = nextValue <= max && nextValue >= min
-  return isValid && onValidate(nextValue)
+  return onValidate(nextValue) && isValid
 }
 
 export const isValidValue = (
@@ -40,7 +72,7 @@ export const isValidValue = (
   currentValue: number,
   options: Options
 ) =>
-  typeof nextValue !== 'undefined' &&
+  typeof nextValue === 'number' &&
   nextValue !== currentValue &&
   Math.round(nextValue % options.step) === 0 &&
   validateValue(nextValue, options)
@@ -66,6 +98,17 @@ export const positionToValue = (
 
 export const valueToPosition = (value: number, { max, min }: Bounds) => {
   return ((value - min) / (max - min)) * 100
+}
+
+export const isEqualValue = (value: Value, compare: Value) => {
+  const valueKeys = Object.keys(value)
+  const compareKeys = Object.keys(compare)
+  const hasEqualKeys = valueKeys.every((key) => compareKeys.includes(key))
+  const hasSameKeyLength = valueKeys.length === compareKeys.length
+  const hasSameValues = Object.entries(value).every(
+    ([name, val]) => val === compare[name]
+  )
+  return hasSameKeyLength && hasEqualKeys && hasSameValues
 }
 
 export const withJS = () => {

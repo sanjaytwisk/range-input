@@ -1,3 +1,4 @@
-export { Range, MockEvent } from './Range'
-export { DynamicRange } from './DynamicRange'
+export * from './Range'
+export * from './rangeValue'
+export * from './singleValue'
 export * from './utils'

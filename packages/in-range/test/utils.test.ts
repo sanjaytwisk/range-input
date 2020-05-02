@@ -4,7 +4,13 @@ import {
   validateValue,
   positionToValue,
   valueToPosition,
-} from '../utils'
+  getRootElement,
+  getElements,
+  createFill,
+  Bounds,
+} from '../src/utils'
+
+import { Store } from '../src/Store'
 
 describe('utils', () => {
   describe('getElement()', () => {
@@ -13,13 +19,82 @@ describe('utils', () => {
     element.setAttribute('data-range-fill', '')
     root.append(element)
     it('should return a range input element given a element type', () => {
-      const result = getElement(root, 'fill')
+      const result = getElement(root, '[data-range-fill]')
       expect(result).toBeInstanceOf(HTMLDivElement)
     })
 
     it('should throw an error if the element is not found', () => {
       expect(() => getElement(root, 'test')).toThrow()
       expect(() => getElement(root, '')).toThrow()
+    })
+  })
+
+  describe('getRootElement()', () => {
+    const element = document.createElement('div')
+    element.setAttribute('data-range', '')
+    document.body.append(element)
+    it('should return a element given a element selector', () => {
+      const result = getRootElement('[data-range]')
+      expect(result).toBeInstanceOf(HTMLDivElement)
+    })
+
+    it('should return a element given a element', () => {
+      const result = getRootElement(element)
+      expect(result).toBeInstanceOf(HTMLDivElement)
+    })
+
+    it('should throw an error if the element is not found', () => {
+      expect(() => getRootElement('.test')).toThrow()
+    })
+  })
+
+  describe('getElements', () => {
+    let element: HTMLElement
+    let thumb: HTMLElement
+    let input: HTMLElement
+    beforeEach(() => {
+      element = document.createElement('div')
+      element.setAttribute('data-range', '')
+      thumb = document.createElement('label')
+      input = document.createElement('input')
+      thumb.setAttribute('data-range-thumb', '')
+      input.setAttribute('data-range-input', '')
+      element.append(thumb)
+      element.append(input)
+      document.body.innerHTML = ''
+      document.body.append(element)
+    })
+    it('given a root element and all required elements exist in the DOM, it should return an object of elements', () => {
+      const result = getElements(element)
+      expect(result).toHaveProperty('root', element)
+      expect(result).toHaveProperty('thumb', thumb)
+      expect(result).toHaveProperty('input', input)
+      expect(result).toHaveProperty('fill', null)
+    })
+
+    it('given a valid element selector and all required elements exist in the DOM, it should return an object of elements', () => {
+      const result = getElements('[data-range]')
+      expect(result).toHaveProperty('root', element)
+      expect(result).toHaveProperty('thumb', thumb)
+      expect(result).toHaveProperty('input', input)
+      expect(result).toHaveProperty('fill', null)
+    })
+
+    it('given the fill element exists in the DOM, it should return the fill element', () => {
+      const fill = document.createElement('div')
+      fill.setAttribute('data-range-fill', '')
+      element.append(fill)
+      const result = getElements(element)
+      expect(result).toHaveProperty('fill', fill)
+    })
+
+    it('given the root element cannot be found, it should throw an error', () => {
+      expect(() => getElements('.test')).toThrow()
+    })
+
+    it('given any of the required elements cannot be found, it should throw an error', () => {
+      element.removeChild(input)
+      expect(() => getElements(element)).toThrow()
     })
   })
 
@@ -148,6 +223,32 @@ describe('utils', () => {
       values.forEach((value, index) =>
         expect(valueToPosition(value, bounds)).toEqual(outcomes[index])
       )
+    })
+  })
+
+  describe('createFill', () => {
+    let store: Store
+    let bounds: Bounds
+    let mockSubscribe: jest.Mock
+    beforeEach(() => {
+      mockSubscribe = jest.fn()
+      store = new Store({ value: {}, rect: { left: 0, width: 0 } })
+      store.subscribe = () => mockSubscribe()
+      bounds = {
+        min: 0,
+        max: 10,
+        step: 1,
+      }
+    })
+    it('given the DOM element is missing, it should return a function', () => {
+      const result = createFill(null, store, bounds)
+      expect(typeof result).toEqual('function')
+      expect(() => result()).not.toThrow()
+    })
+
+    it('given the DOM element is present, it should subscribe to the store', () => {
+      createFill(document.createElement('div'), store, bounds)
+      expect(mockSubscribe.mock.calls.length).toEqual(1)
     })
   })
 })

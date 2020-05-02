@@ -1,29 +1,35 @@
-interface FillState {
-  start: number
-  end: number
-}
-export class Fill {
-  private state: FillState
-  constructor(
-    private element: HTMLDivElement,
-    init: FillState = { start: 0, end: 0 }
-  ) {
-    this.state = init
-    this.update(this.state)
-  }
+import { Bounds, isEqualValue, valueToPosition } from './utils'
+import { State, Value } from './Store'
 
-  private update({ start, end }: FillState) {
-    this.element.setAttribute(
-      'style',
-      `width: ${end - start}%; left: ${start}%`
-    )
-  }
-
-  public setState(nextState: Partial<FillState>) {
-    this.state = {
-      ...this.state,
-      ...nextState,
+const valuesToStartEnd = (value: Value, bounds: Bounds) => {
+  const { min, max } = value
+  const [singleValue] = Object.values(value)
+  if (typeof min !== 'undefined' && typeof max !== 'undefined') {
+    return {
+      start: valueToPosition(min, bounds),
+      end: valueToPosition(max, bounds),
     }
-    this.update(this.state)
+  }
+  if (singleValue) {
+    return {
+      start: 0,
+      end: valueToPosition(singleValue, bounds),
+    }
+  }
+  return {
+    start: 0,
+    end: 0,
+  }
+}
+
+export class Fill<T extends HTMLElement> {
+  constructor(private element: T, private bounds: Bounds) {}
+
+  public update = ({ value }: State, { value: previousValue }: State) => {
+    if (isEqualValue(value, previousValue)) {
+      return
+    }
+    const { start, end } = valuesToStartEnd(value, this.bounds)
+    this.element.setAttribute('style', `width:${end - start}%;left:${start}%;`)
   }
 }

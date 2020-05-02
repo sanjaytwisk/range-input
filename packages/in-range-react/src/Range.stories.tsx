@@ -2,7 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import { withA11y } from '@storybook/addon-a11y'
 import { Range } from './Range'
 import { RangeDynamic } from './RangeDynamic'
-import { Range as RangeVanilla, DynamicRange } from '@twisk/in-range'
+import {
+  singleValue,
+  SingleValue,
+  rangeValue,
+  RangeValue,
+} from '@twisk/in-range'
 import { useJS } from './useJS'
 
 export default {
@@ -52,7 +57,7 @@ export const multi = () => {
 
 export const vanilla = () => {
   useJS()
-  const range = useRef<RangeVanilla>()
+  const range = useRef<SingleValue>()
   const options = {
     selector: '[data-range]',
     name: 'vanilla',
@@ -61,7 +66,7 @@ export const vanilla = () => {
     step: 1,
   }
   useEffect(() => {
-    range.current = RangeVanilla.create(options, { value: 5 })
+    range.current = singleValue(options, 5)
 
     return () => {
       range.current?.destroy()
@@ -95,26 +100,26 @@ export const vanilla = () => {
 
 export const vanillaMulti = () => {
   useJS()
-  const range = useRef<DynamicRange>()
+  const range = useRef<RangeValue>()
   const options = {
-    selector: '[data-multi-range]',
+    selector: '[data-multi-range="vanilla-multi"]',
     name: 'vanilla-multi',
     min: 0,
     max: 10,
     step: 1,
   }
   useEffect(() => {
-    range.current = DynamicRange.create(options, { min: 5, max: 10 })
+    range.current = rangeValue(options, { min: 5, max: 10 })
 
     return () => {
       range.current?.destroy()
     }
   }, [])
   return (
-    <div className="multi-range" data-multi-range="">
+    <div className="multi-range" data-multi-range={options.name}>
       <div className="range-track" />
       <div className="range-fill" data-range-fill="" />
-      <div data-range-min={options.name} className="range">
+      <div data-range="min" className="range">
         <input
           type="range"
           min={options.min}
@@ -134,7 +139,7 @@ export const vanillaMulti = () => {
           Set minimum amount
         </label>
       </div>
-      <div data-range-max={options.name} className="range">
+      <div data-range="max" className="range">
         <input
           type="range"
           min={options.min}
