@@ -17,7 +17,15 @@ export interface Rect {
   width: number
 }
 
+export interface Ref<T> {
+  current: T
+}
+
 export type Validator = (value?: number) => boolean
+
+export const createRef = <T extends {}>(initialValue: T) => ({
+  current: initialValue,
+})
 
 export const getRootElement = <T extends HTMLElement>(
   selector: string | HTMLElement

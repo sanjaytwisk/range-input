@@ -1,4 +1,4 @@
-import { createRange, Range } from '../src/Range'
+import { createRange, Range } from '../src/range'
 import { Store } from '../src/Store'
 import { Actions } from '../src/actions'
 

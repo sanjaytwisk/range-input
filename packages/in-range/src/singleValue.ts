@@ -1,4 +1,4 @@
-import { createRange, Options, MockEvent } from './Range'
+import { createRange, Options, MockEvent } from './range'
 import { Store, State } from './Store'
 import { createSetValue } from './actions'
 import { getElements, createFill } from './utils'
