@@ -2,7 +2,7 @@
   "name": "@twisk/in-range",
   "version": "1.0.0",
   "description": "Accessible Vanilla JS Range Input Component",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "author": "Sanjay Twisk",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "yarn build:css & yarn build:ts",
     "build:ts": "yarn clean:dist && tsc",
     "build:css": "yarn clean:css && postcss src/css/*.css --base src/css --dir css",
-    "clean:dist": "rm -rf ./dist",
+    "clean:dist": "rm -rf ./lib",
     "clean:css": "rm -rf ./css"
   },
   "devDependencies": {

@@ -2,14 +2,14 @@
   "name": "@twisk/in-range-react",
   "version": "1.0.0",
   "description": "Accessible React Range Input Component",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "author": "Sanjay Twisk",
   "license": "MIT",
   "scripts": {
     "dev": "start-storybook -p 5000 --ci",
     "build": "yarn clean && yarn build:react",
     "build:react": "tsc -p ./tsconfig.json",
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./lib",
     "lint:ts": "tslint -c tslint.json -t stylish --fix src/**/*.{ts,tsx}",
     "lint:types": "tsc --noEmit"
   },
