@@ -6,11 +6,7 @@ import {
   valueToPosition,
   getRootElement,
   getElements,
-  createFill,
-  Bounds,
 } from '../src/utils'
-
-import { createStore, Store } from '../src/store'
 
 describe('utils', () => {
   describe('getElement()', () => {
@@ -223,32 +219,6 @@ describe('utils', () => {
       values.forEach((value, index) =>
         expect(valueToPosition(value, bounds)).toEqual(outcomes[index])
       )
-    })
-  })
-
-  describe('createFill', () => {
-    let store: Store
-    let bounds: Bounds
-    let mockSubscribe: jest.Mock
-    beforeEach(() => {
-      mockSubscribe = jest.fn()
-      store = createStore({ value: {}, rect: { left: 0, width: 0 } })
-      store.subscribe = () => mockSubscribe()
-      bounds = {
-        min: 0,
-        max: 10,
-        step: 1,
-      }
-    })
-    it('given the DOM element is missing, it should return a function', () => {
-      const result = createFill(null, store, bounds)
-      expect(typeof result).toEqual('function')
-      expect(() => result()).not.toThrow()
-    })
-
-    it('given the DOM element is present, it should subscribe to the store', () => {
-      createFill(document.createElement('div'), store, bounds)
-      expect(mockSubscribe.mock.calls.length).toEqual(1)
     })
   })
 })

@@ -1,13 +1,8 @@
 import { createRange, Options, MockEvent } from './range'
 import { createStore, Value } from './store'
 import { createSetValue } from './actions'
-import {
-  getElement,
-  getRootElement,
-  getElements,
-  isEqualValue,
-  createFill,
-} from './utils'
+import { getElement, getRootElement, getElements, isEqualValue } from './utils'
+import { createFill } from './fill'
 
 const MIN = 'min'
 const MAX = 'max'
@@ -83,8 +78,8 @@ export const rangeValue = (
       store
     ),
   }
-
-  const unsubscribeFill = createFill(fill, store, options)
+  const fillInstance = createFill(fill, options)
+  const unsubscribeFill = store.subscribe(fillInstance.update)
 
   const unsubscribeRange = Object.values(rangeInstances).map((instance) =>
     store.subscribe(instance.update)

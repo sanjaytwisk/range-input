@@ -1,6 +1,4 @@
-import { Value, Store } from './store'
-import { Fill } from './Fill'
-
+import { Value } from './store'
 export interface Bounds {
   min: number
   max: number
@@ -55,16 +53,6 @@ export const getElements = (selector: string | HTMLElement) => {
   const input = getElement<HTMLInputElement>(root, '[data-range-input]')
   const fill = document.querySelector<HTMLElement>('[data-range-fill]')
   return { root, thumb, input, fill }
-}
-
-export const createFill = <T extends HTMLElement>(
-  element: T | null,
-  store: Store,
-  bounds: Bounds
-) => {
-  if (!element) return () => null
-  const fillInstance = new Fill(element, bounds)
-  return store.subscribe(fillInstance.update)
 }
 
 export const validateValue = (

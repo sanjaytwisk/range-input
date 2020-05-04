@@ -1,5 +1,9 @@
 import { Bounds, isEqualValue, valueToPosition } from './utils'
-import { State, Value } from './store'
+import { State, Value, Observer } from './store'
+
+export interface Fill {
+  update: Observer
+}
 
 const valuesToStartEnd = (value: Value, bounds: Bounds) => {
   const { min, max } = value
@@ -22,14 +26,24 @@ const valuesToStartEnd = (value: Value, bounds: Bounds) => {
   }
 }
 
-export class Fill<T extends HTMLElement> {
-  constructor(private element: T, private bounds: Bounds) {}
-
-  public update = ({ value }: State, { value: previousValue }: State) => {
+export const createFill = <T extends HTMLElement>(
+  element: T | null,
+  bounds: Bounds
+) => {
+  if (!element) {
+    return {
+      update: () => null,
+    }
+  }
+  const update = ({ value }: State, { value: previousValue }: State) => {
     if (isEqualValue(value, previousValue)) {
       return
     }
-    const { start, end } = valuesToStartEnd(value, this.bounds)
-    this.element.setAttribute('style', `width:${end - start}%;left:${start}%;`)
+    const { start, end } = valuesToStartEnd(value, bounds)
+    element.setAttribute('style', `width:${end - start}%;left:${start}%;`)
+  }
+
+  return {
+    update,
   }
 }

@@ -1,7 +1,8 @@
 import { createRange, Options, MockEvent } from './range'
 import { createStore, State } from './store'
 import { createSetValue } from './actions'
-import { getElements, createFill } from './utils'
+import { getElements } from './utils'
+import { createFill } from './fill'
 
 export interface SingleValue {
   getValue: () => number
@@ -33,7 +34,8 @@ export const singleValue = (
     ...initialState,
   })
   const rangeInstance = createRange(elements, options, store)
-  const unsubscribeFill = createFill(elements.fill, store, options)
+  const fillInstance = createFill(elements.fill, options)
+  const unsubscribeFill = store.subscribe(fillInstance.update)
   const unsubscribeRange = store.subscribe(rangeInstance.update)
   const unsubscribeValueChange = store.subscribe((state, previousState) => {
     const value = selectValue(state, options.name)
