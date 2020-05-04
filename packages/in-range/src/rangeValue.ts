@@ -1,5 +1,5 @@
 import { createRange, Options, MockEvent } from './range'
-import { Store, Value } from './Store'
+import { createStore, Value } from './store'
 import { createSetValue } from './actions'
 import {
   getElement,
@@ -48,7 +48,7 @@ export const rangeValue = (
     [MIN]: getElement(rootElement, `[data-range="${MIN}"]`),
     [MAX]: getElement(rootElement, `[data-range="${MAX}"]`),
   }
-  const store = new Store({
+  const store = createStore({
     ...initialState,
   })
   const createOnValidate = (name: Name) => (nextValue: number) => {

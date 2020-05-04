@@ -1,5 +1,5 @@
 import { createRange, Options, MockEvent } from './range'
-import { Store, State } from './Store'
+import { createStore, State } from './store'
 import { createSetValue } from './actions'
 import { getElements, createFill } from './utils'
 
@@ -29,7 +29,7 @@ export const singleValue = (
   initialValue?: number
 ): SingleValue => {
   const elements = getElements(options.selector)
-  const store = new Store({
+  const store = createStore({
     ...initialState,
   })
   const rangeInstance = createRange(elements, options, store)

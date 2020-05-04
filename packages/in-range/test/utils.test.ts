@@ -10,7 +10,7 @@ import {
   Bounds,
 } from '../src/utils'
 
-import { Store } from '../src/Store'
+import { createStore, Store } from '../src/store'
 
 describe('utils', () => {
   describe('getElement()', () => {
@@ -232,7 +232,7 @@ describe('utils', () => {
     let mockSubscribe: jest.Mock
     beforeEach(() => {
       mockSubscribe = jest.fn()
-      store = new Store({ value: {}, rect: { left: 0, width: 0 } })
+      store = createStore({ value: {}, rect: { left: 0, width: 0 } })
       store.subscribe = () => mockSubscribe()
       bounds = {
         min: 0,

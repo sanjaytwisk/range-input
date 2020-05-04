@@ -1,8 +1,8 @@
 import { createRange, Range } from '../src/range'
-import { Store } from '../src/Store'
+import { createStore } from '../src/store'
 import { Actions } from '../src/actions'
 
-jest.mock('../src/Store')
+jest.mock('../src/store')
 
 const getEventName = ([name]: [string]) => name
 
@@ -33,14 +33,14 @@ describe('Range', () => {
   }
 
   describe('constructor', () => {
-    let store: Store
+    let store = createStore(initialState)
     beforeEach(() => {
       elements = createElements()
       elements.root.addEventListener = jest.fn()
       elements.thumb.addEventListener = jest.fn()
       elements.input.addEventListener = jest.fn()
 
-      store = new Store(initialState)
+      store = createStore(initialState)
       instance = createRange(elements, options, store)
     })
     it('given valid elements, options and store, it should add the correct event listeners to the elements', () => {
@@ -72,7 +72,7 @@ describe('Range', () => {
   describe('update', () => {
     beforeEach(() => {
       elements = createElements()
-      instance = createRange(elements, options, new Store(initialState))
+      instance = createRange(elements, options, createStore(initialState))
     })
     it('given two valid state objects that contain different values, it should update the thumb and input elements', () => {
       const { input, thumb } = elements
@@ -102,7 +102,7 @@ describe('Range', () => {
       elements.root.removeEventListener = jest.fn()
       elements.thumb.removeEventListener = jest.fn()
       elements.input.removeEventListener = jest.fn()
-      instance = createRange(elements, options, new Store(initialState))
+      instance = createRange(elements, options, createStore(initialState))
     })
 
     it('should call the correct removeEventListener on the elements', () => {

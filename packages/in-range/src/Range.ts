@@ -5,7 +5,7 @@ import {
   Validator,
   createRef,
 } from './utils'
-import { Store, State } from './Store'
+import { Store, State } from './store'
 import {
   createSetRect as createSetRectAction,
   createSetValue as createSetValueAction,

@@ -1,5 +1,5 @@
-export class Store {
-  public subscribe = jest.fn()
-  public dispatch = jest.fn()
-  public getState = jest.fn()
-}
+export const createStore = () => ({
+  subscribe: jest.fn(),
+  dispatch: jest.fn(),
+  getState: jest.fn(),
+})

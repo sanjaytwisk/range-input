@@ -15,47 +15,55 @@ export interface Action<T = any> {
 }
 
 export type Observer = (previouseState: State, nextState: State) => void
+export interface Store {
+  getState: () => State
+  subscribe: (observer: Observer) => () => void
+  dispatch: (action: Action) => void
+}
 
-export class Store {
-  private observers: Set<Observer> = new Set()
+export const reduce = (state: State, action: Action) => {
+  switch (action.type) {
+    case Actions.SET_VALUE:
+      return {
+        ...state,
+        value: {
+          ...state.value,
+          [action.payload.name]: action.payload.value,
+        },
+      }
+    case Actions.SET_RECT:
+      return {
+        ...state,
+        rect: action.payload,
+      }
+    default:
+      return state
+  }
+}
 
-  constructor(private state: State) {}
+export const createStore = (initialState: State) => {
+  let currentState = reduce(initialState, { type: 'EMPTY' })
+  const observers = new Set<Observer>()
 
-  private reduce(state: State, action: Action) {
-    switch (action.type) {
-      case Actions.SET_VALUE:
-        return {
-          ...state,
-          value: {
-            ...state.value,
-            [action.payload.name]: action.payload.value,
-          },
-        }
-      case Actions.SET_RECT:
-        return {
-          ...state,
-          rect: action.payload,
-        }
-      default:
-        return state
-    }
+  const dispatch = (action: Action) => {
+    const nextState = reduce(currentState, action)
+    observers.forEach((observer) => observer(nextState, currentState))
+    currentState = nextState
   }
 
-  public dispatch = (action: Action) => {
-    const nextState = this.reduce(this.state, action)
-    this.observers.forEach((observer) => observer(nextState, this.state))
-    this.state = nextState
-  }
-
-  public subscribe = (observer: Observer) => {
-    this.observers = this.observers.add(observer)
+  const subscribe = (observer: Observer) => {
+    observers.add(observer)
 
     return () => {
-      this.observers.delete(observer)
+      observers.delete(observer)
     }
   }
 
-  public getState() {
-    return this.state
+  const getState = () => currentState
+
+  return {
+    getState,
+    subscribe,
+    dispatch,
   }
 }

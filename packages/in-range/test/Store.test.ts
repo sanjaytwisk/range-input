@@ -1,6 +1,28 @@
-import { Store } from '../src/Store'
+import { createStore, reduce, Store } from '../src/store'
 
-describe('Store', () => {
+describe('reduce', () => {
+  const initialState = {
+    value: {},
+    position: 0,
+    isMouseDown: false,
+    rect: { left: 0, width: 0 },
+  }
+  it('given a valid action, it should return the next state object', () => {
+    const payload = { name: 'test', value: 5 }
+    const result = reduce(initialState, {
+      type: 'SET_VALUE',
+      payload,
+    })
+    expect(result).toHaveProperty('value', { test: 5 })
+  })
+
+  it('given an unknown action, it should return the given state', () => {
+    const result = reduce(initialState, { type: 'LOL' })
+    expect(result).toEqual(initialState)
+  })
+})
+
+describe('createStore', () => {
   let instance: Store
   const initialState = {
     value: {},
@@ -9,27 +31,11 @@ describe('Store', () => {
     rect: { left: 0, width: 0 },
   }
   beforeEach(() => {
-    instance = new Store(initialState)
+    instance = createStore(initialState)
   })
   describe('getState', () => {
     it('it should return the current state object', () => {
       expect(instance.getState()).toEqual(initialState)
-    })
-  })
-
-  describe('reduce', () => {
-    it('given a valid action, it should return the next state object', () => {
-      const payload = { name: 'test', value: 5 }
-      const result = instance['reduce'](initialState, {
-        type: 'SET_VALUE',
-        payload,
-      })
-      expect(result).toHaveProperty('value', { test: 5 })
-    })
-
-    it('given an unknown action, it should return the given state', () => {
-      const result = instance['reduce'](initialState, { type: 'LOL' })
-      expect(result).toEqual(initialState)
     })
   })
 
@@ -70,15 +76,20 @@ describe('Store', () => {
 
   describe('subscribe', () => {
     it('given a valid observer function, it should store the observer', () => {
-      instance.subscribe(() => null)
-      expect(instance['observers'].size).toEqual(1)
+      const observer = jest.fn()
+      instance.subscribe(observer)
+      instance.dispatch({ type: 'EMPTY' })
+      expect(observer.mock.calls.length).toEqual(1)
     })
 
     it('given a valid observer, it should return a function that removes the observers subscription', () => {
-      const unsubscribe = instance.subscribe(() => null)
+      const observer = jest.fn()
+      const unsubscribe = instance.subscribe(observer)
       expect(typeof unsubscribe).toEqual('function')
+      instance.dispatch({ type: 'Empty' })
       unsubscribe()
-      expect(instance['observers'].size).toEqual(0)
+      instance.dispatch({ type: 'Empty' })
+      expect(observer.mock.calls.length).toEqual(1)
     })
   })
 })

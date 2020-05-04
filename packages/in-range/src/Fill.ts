@@ -1,5 +1,5 @@
 import { Bounds, isEqualValue, valueToPosition } from './utils'
-import { State, Value } from './Store'
+import { State, Value } from './store'
 
 const valuesToStartEnd = (value: Value, bounds: Bounds) => {
   const { min, max } = value

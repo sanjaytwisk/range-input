@@ -1,4 +1,4 @@
-import { Value, Store } from './Store'
+import { Value, Store } from './store'
 import { Fill } from './Fill'
 
 export interface Bounds {
