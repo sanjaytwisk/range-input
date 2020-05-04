@@ -1,14 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { withA11y } from '@storybook/addon-a11y'
 import { Range } from './Range'
 import { RangeDynamic } from './RangeDynamic'
-import {
-  singleValue,
-  SingleValue,
-  rangeValue,
-  RangeValue,
-} from '@twisk/in-range'
-import { useJS } from './useJS'
 
 export default {
   title: 'Range',
@@ -52,113 +45,5 @@ export const multi = () => {
       value={value}
       onChange={onChange}
     />
-  )
-}
-
-export const vanilla = () => {
-  useJS()
-  const range = useRef<SingleValue>()
-  const options = {
-    selector: '[data-range]',
-    name: 'vanilla',
-    min: 0,
-    max: 10,
-    step: 1,
-  }
-  useEffect(() => {
-    range.current = singleValue(options, 5)
-
-    return () => {
-      range.current?.destroy()
-    }
-  }, [])
-  return (
-    <div data-range="" className="range">
-      <div className="range-track" />
-      <div className="range-fill" data-range-fill="" />
-      <input
-        type="range"
-        min={options.min}
-        max={options.max}
-        step={options.step}
-        className="range__input"
-        id={options.name}
-        name={options.name}
-        data-range-input=""
-      />
-      <label
-        data-range-thumb=""
-        className="range__label"
-        htmlFor={options.name}
-        draggable={false}
-      >
-        Set amount
-      </label>
-    </div>
-  )
-}
-
-export const vanillaMulti = () => {
-  useJS()
-  const range = useRef<RangeValue>()
-  const options = {
-    selector: '[data-multi-range="vanilla-multi"]',
-    name: 'vanilla-multi',
-    min: 0,
-    max: 10,
-    step: 1,
-  }
-  useEffect(() => {
-    range.current = rangeValue(options, { min: 5, max: 10 })
-
-    return () => {
-      range.current?.destroy()
-    }
-  }, [])
-  return (
-    <div className="multi-range" data-multi-range={options.name}>
-      <div className="range-track" />
-      <div className="range-fill" data-range-fill="" />
-      <div data-range="min" className="range">
-        <input
-          type="range"
-          min={options.min}
-          max={options.max}
-          step={options.step}
-          className="range__input"
-          id={`${options.name}[min]`}
-          name={`${options.name}[min]`}
-          data-range-input=""
-        />
-        <label
-          data-range-thumb=""
-          className="range__label"
-          htmlFor={`${options.name}[min]`}
-          draggable={false}
-        >
-          Set minimum amount
-        </label>
-      </div>
-      <div data-range="max" className="range">
-        <input
-          type="range"
-          min={options.min}
-          max={options.max}
-          step={options.step}
-          className="range__input"
-          id={`${options.name}[max]`}
-          name={`${options.name}[max]`}
-          data-range-input=""
-        />
-        <label
-          data-range-thumb=""
-          className="range__label"
-          htmlFor={`${options.name}[max]`}
-          draggable={false}
-        >
-          Set maximum amount
-        </label>
-      </div>
-    </div>
   )
 }

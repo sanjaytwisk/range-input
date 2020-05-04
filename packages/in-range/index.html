@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <script src="dev.ts" defer></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 4rem 2rem;
+        font-family: sans-serif;
+      }
+
+      section + section {
+        margin-top: 8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>In Range</h1>
+    <section>
+      <h3>Single Value</h3>
+      <div data-range="single-value" class="range">
+        <div class="range-track"></div>
+        <div class="range-fill" data-range-fill=""></div>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          step="1"
+          class="range__input"
+          id="single-value"
+          name="single-value"
+          data-range-input=""
+        />
+        <label
+          data-range-thumb=""
+          class="range__label"
+          htmlFor="single-value"
+          draggable="false"
+        >
+          Set amount
+        </label>
+      </div>
+    </section>
+    <section>
+      <h3>Range Value</h3>
+      <div class="multi-range" data-multi-range="range-input">
+        <div class="range-track"></div>
+        <div class="range-fill" data-range-fill=""></div>
+        <div data-range="min" class="range">
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            class="range__input"
+            id="range-input[min]"
+            name="range-input[min]"
+            data-range-input=""
+          />
+          <label
+            data-range-thumb=""
+            class="range__label"
+            htmlFor="range-input[min]"
+            draggable="false"
+          >
+            Set minimum amount
+          </label>
+        </div>
+        <div data-range="max" class="range">
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            class="range__input"
+            id="range-input[max]"
+            name="range-input[max]"
+            data-range-input=""
+          />
+          <label
+            data-range-thumb=""
+            class="range__label"
+            htmlFor="range-input[max]"
+            draggable="false"
+          >
+            Set maximum amount
+          </label>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

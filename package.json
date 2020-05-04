@@ -10,7 +10,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn dev:js & yarn dev:react",
     "dev:react": "yarn workspace @twisk/in-range-react dev",
     "dev:js": "yarn workspace @twisk/in-range dev",
     "build": "yarn build:js && yarn build:react",

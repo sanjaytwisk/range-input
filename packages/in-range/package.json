@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "dev": "yarn build:ts --watch & yarn build:css --watch",
+    "dev": "parcel index.html",
     "build": "yarn build:css & yarn build:ts",
     "build:ts": "yarn clean:dist && tsc",
     "build:css": "yarn clean:css && postcss src/css/*.css --base src/css --dir css",
@@ -19,6 +19,7 @@
     "@types/node": "13.9.8",
     "babel-loader": "8.1.0",
     "jest": "25.2.6",
+    "parcel": "1.12.4",
     "postcss-cli": "7.1.0",
     "postcss-loader": "3.0.0",
     "postcss-nested": "4.2.1",
