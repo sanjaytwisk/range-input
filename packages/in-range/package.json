@@ -10,7 +10,7 @@
     "dev": "yarn build:ts --watch & yarn build:css --watch",
     "build": "yarn clean && yarn build:css & yarn build:ts",
     "build:ts": "tsc",
-    "build:css": "postcss src/*.css --base src --dir dist/css",
+    "build:css": "postcss src/css/*.css --base src/css --dir dist/css",
     "clean": "rm -rf ./dist"
   },
   "devDependencies": {
