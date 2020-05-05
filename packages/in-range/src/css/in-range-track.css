@@ -1,4 +1,4 @@
-.range-track {
+.in-range-track {
   display: none;
   width: 100%;
   height: var(--range-track-height, 2px);

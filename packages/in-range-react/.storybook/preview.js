@@ -1,4 +1,3 @@
 import { detectInputDevice, withJS } from '@twisk/in-range'
-import '@twisk/in-range/css/all.css'
+import '@twisk/in-range/css/in-range.css'
 detectInputDevice()
-withJS()

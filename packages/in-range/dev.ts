@@ -1,5 +1,5 @@
 import { singleValue, rangeValue, withJS, detectInputDevice } from './src'
-import './src/css/all.css'
+import './src/css/in-range.css'
 
 const onLoad = () => {
   withJS()

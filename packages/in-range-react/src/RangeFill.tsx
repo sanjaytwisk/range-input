@@ -10,7 +10,7 @@ export const RangeFill: React.FunctionComponent<RangeFillProps> = ({
   end,
 }) => (
   <div
-    className="range-fill"
+    className="in-range-fill"
     style={{
       width: `${end - start}%`,
       left: `${start}%`,

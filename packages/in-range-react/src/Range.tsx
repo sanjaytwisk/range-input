@@ -115,7 +115,9 @@ export const Range: React.FunctionComponent<RangeProps> = ({
 
   return (
     <div
-      className={`range${withTrack ? ' range--clickable' : ''}`}
+      className={`in-range-value${
+        withTrack ? ' in-range-value--clickable' : ''
+      }`}
       ref={rangeElement}
       onClick={withTrack ? onClick : undefined}
     >
@@ -133,13 +135,13 @@ export const Range: React.FunctionComponent<RangeProps> = ({
         min={min}
         max={max}
         step={step}
-        className="range__input"
+        className="in-range-value__input"
         onChange={onInputChange}
         id={name}
         name={name}
       />
       <label
-        className="range__label"
+        className="in-range-value__label"
         htmlFor={name}
         style={{
           ['--range-thumb-left' as any]: `${valueToPosition(

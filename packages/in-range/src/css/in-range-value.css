@@ -1,4 +1,4 @@
-.range {
+.in-range-value {
   --range-thumb-offset: calc(var(--range-thumb-size, 1rem) / 2);
   --thumb-size: var(--range-thumb-size, 1rem);
   --thumb-radius: var(--range-thumb-radius, var(--thumb-size));
@@ -101,7 +101,7 @@
     display: block;
   }
 
-  [data-has-js] .multi-range & {
+  [data-has-js] .in-range-minmax & {
     background: transparent;
     position: absolute;
     margin: 0;

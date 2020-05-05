@@ -34,7 +34,7 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
   const fillEnd = valueToPosition(maxValue, { min, max, step })
 
   return (
-    <fieldset className="multi-range">
+    <fieldset className="in-range-minmax">
       <RangeTrack />
       <RangeFill start={fillStart} end={fillEnd} />
       <Range
