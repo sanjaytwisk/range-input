@@ -1,3 +1,3 @@
-export * from './Range'
-export * from './RangeDynamic'
+export * from './RangeValue'
+export * from './RangeMinMax'
 export { useJS } from './useJS'

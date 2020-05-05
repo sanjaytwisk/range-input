@@ -1,11 +1,11 @@
 import React from 'react'
-import { Range } from './Range'
+import { RangeValue } from './RangeValue'
 import { RangeFill } from './RangeFill'
 import { valueToPosition, MockEvent } from '@twisk/in-range'
 
 import { RangeTrack } from './RangeTrack'
 
-export interface RangeDynamicProps {
+export interface RangeMinMaxProps {
   name: string
   min: number
   max: number
@@ -14,7 +14,7 @@ export interface RangeDynamicProps {
   onChange?: (evt: MockEvent<number>) => void
 }
 
-export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
+export const RangeMinMax: React.FunctionComponent<RangeMinMaxProps> = ({
   name,
   value,
   min,
@@ -37,7 +37,7 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
     <fieldset className="in-range-minmax">
       <RangeTrack />
       <RangeFill start={fillStart} end={fillEnd} />
-      <Range
+      <RangeValue
         value={minValue}
         min={min}
         max={max}
@@ -49,8 +49,8 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
         withFill={false}
       >
         Maximum value
-      </Range>
-      <Range
+      </RangeValue>
+      <RangeValue
         value={maxValue}
         min={min}
         max={max}
@@ -62,7 +62,7 @@ export const RangeDynamic: React.FunctionComponent<RangeDynamicProps> = ({
         withFill={false}
       >
         Maximum value
-      </Range>
+      </RangeValue>
     </fieldset>
   )
 }

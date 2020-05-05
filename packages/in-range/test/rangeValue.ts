@@ -1,8 +1,8 @@
-import { SingleValue, singleValue } from '../'
+import { RangeValue, rangeValue } from '../lib'
 import { createElements } from './helpers/helpers'
 
-describe('singleValue', () => {
-  let instance: SingleValue
+describe('rangeValue', () => {
+  let instance: RangeValue
   let onValueChange = jest.fn()
   let onValidate = jest.fn()
   const initialValue = 5
@@ -17,7 +17,7 @@ describe('singleValue', () => {
     onValidate = jest.fn(() => true)
     const selector = createElements()
 
-    instance = singleValue(
+    instance = rangeValue(
       { ...options, selector, onValueChange, onValidate },
       initialValue
     )
@@ -29,7 +29,7 @@ describe('singleValue', () => {
     })
 
     it('given no initial value, it should return the min value', () => {
-      instance = singleValue({
+      instance = rangeValue({
         ...options,
         selector: createElements(),
       })

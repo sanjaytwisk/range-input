@@ -1,28 +1,18 @@
 import { createRange, Options, MockEvent } from './range'
-import { createStore, Value } from './store'
+import { createStore, State } from './store'
 import { createSetValue } from './actions'
-import { getElement, getRootElement, getElements, isEqualValue } from './utils'
+import { getElements } from './utils'
 import { createFill } from './fill'
 
-const MIN = 'min'
-const MAX = 'max'
-
-type Name = 'min' | 'max'
-
-interface ValueMinMax {
-  min: number
-  max: number
-}
-
 export interface RangeValue {
-  getValue: () => ValueMinMax
-  setValue: (nextValue: number, name: Name) => void
+  getValue: () => number
+  setValue: (nextValue: number) => void
   destroy: () => void
 }
 
-export interface RangeOptions extends Options {
+export interface RangeValueOptions extends Options {
   selector: string | HTMLElement
-  onValueChange?: (evt: MockEvent<Value>) => void
+  onValueChange?: (evt: MockEvent<number>) => void
 }
 
 const initialState = {
@@ -33,91 +23,43 @@ const initialState = {
   },
 }
 
+const selectValue = (state: State, name: string) => state.value[name]
+
 export const rangeValue = (
-  options: RangeOptions,
-  initialValue: Partial<ValueMinMax> = {}
+  options: RangeValueOptions,
+  initialValue?: number
 ): RangeValue => {
-  const rootElement = getRootElement(options.selector)
-  const fill = rootElement.querySelector<HTMLElement>('[data-range-fill]')
-  const selectors = {
-    [MIN]: getElement(rootElement, `[data-range="${MIN}"]`),
-    [MAX]: getElement(rootElement, `[data-range="${MAX}"]`),
-  }
+  const elements = getElements(options.selector)
   const store = createStore({
     ...initialState,
   })
-  const createOnValidate = (name: Name) => (nextValue: number) => {
-    const { min, max } = store.getState().value
-    switch (name) {
-      case MIN:
-        return nextValue < max
-      case MAX:
-        return nextValue > min
-      default:
-        throw new Error('createOnValidate was called without a name identifier')
-    }
-  }
-
-  const rangeInstances = {
-    min: createRange(
-      getElements(selectors.min),
-      {
-        ...options,
-        name: MIN,
-        onValidate: createOnValidate(MIN),
-      },
-      store
-    ),
-    max: createRange(
-      getElements(selectors.max),
-      {
-        ...options,
-        name: MAX,
-        onValidate: createOnValidate(MAX),
-      },
-      store
-    ),
-  }
-  const fillInstance = createFill(fill, options)
+  const rangeInstance = createRange(elements, options, store)
+  const fillInstance = createFill(elements.fill, options)
   const unsubscribeFill = store.subscribe(fillInstance.update)
-
-  const unsubscribeRange = Object.values(rangeInstances).map((instance) =>
-    store.subscribe(instance.update)
-  )
-
+  const unsubscribeRange = store.subscribe(rangeInstance.update)
   const unsubscribeValueChange = store.subscribe((state, previousState) => {
-    const value = state.value
-    const previousValue = previousState.value
-
-    if (
-      !options.onValueChange ||
-      isEqualValue(value, previousValue) ||
-      !Object.keys(previousValue).length
-    ) {
+    const value = selectValue(state, options.name)
+    const previousValue = selectValue(previousState, options.name)
+    if (!options.onValueChange || value === previousValue || !previousValue) {
       return
     }
     options.onValueChange({
-      target: { name: options.name, value },
+      target: { name: options.name, value: value[options.name] },
     })
   })
 
-  store.dispatch(createSetValue(initialValue[MIN] || options.min, MIN))
-  store.dispatch(createSetValue(initialValue[MAX] || options.max, MAX))
+  store.dispatch(createSetValue(initialValue || options.min, options.name))
 
-  const setValue = (nextValue: number, name: Name) => {
-    if (!name || ![MIN, MAX].includes(name)) return
-    rangeInstances[name].setValue(nextValue)
+  const setValue = (nextValue: number) => {
+    rangeInstance.setValue(nextValue)
   }
 
-  const getValue = () => {
-    const { min, max } = store.getState().value
-    return { min, max }
-  }
+  const getValue = () => store.getState().value[options.name]
 
   const destroy = () => {
-    Object.values(rangeInstances).forEach((instance) => instance.destroy())
+    rangeInstance.destroy()
     unsubscribeValueChange()
-    unsubscribeRange.forEach((unsubscribe) => unsubscribe())
+    unsubscribeRange()
     unsubscribeFill()
   }
 

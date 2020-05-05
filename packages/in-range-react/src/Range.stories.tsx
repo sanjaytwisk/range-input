@@ -1,7 +1,7 @@
 import React from 'react'
 import { withA11y } from '@storybook/addon-a11y'
-import { Range } from './Range'
-import { RangeDynamic } from './RangeDynamic'
+import { RangeValue } from './RangeValue'
+import { RangeMinMax } from './RangeMinMax'
 
 export default {
   title: 'Range',
@@ -9,13 +9,13 @@ export default {
   decorators: [withA11y],
 }
 
-export const single = () => {
+export const singleValue = () => {
   const [value, setValue] = React.useState(5)
   const onChange = (evt: any) => {
     setValue(evt.target.value)
   }
   return (
-    <Range
+    <RangeValue
       name="single"
       step={1}
       min={5}
@@ -24,11 +24,11 @@ export const single = () => {
       onChange={onChange}
     >
       Select price
-    </Range>
+    </RangeValue>
   )
 }
 
-export const multi = () => {
+export const minMax = () => {
   const [value, setValue] = React.useState({})
   const onChange = (evt: any) => {
     setValue((previousValue) => ({
@@ -37,7 +37,7 @@ export const multi = () => {
     }))
   }
   return (
-    <RangeDynamic
+    <RangeMinMax
       name="multi"
       step={1}
       min={5}

@@ -1,4 +1,4 @@
-import { singleValue, rangeValue, withJS, detectInputDevice } from './src'
+import { rangeValue, rangeMinMax, withJS, detectInputDevice } from './src'
 import './src/css/in-range.css'
 
 const onLoad = () => {
@@ -6,7 +6,7 @@ const onLoad = () => {
   detectInputDevice()
   const singleValueEl = document.querySelector<HTMLDivElement>('[data-range]')
   const rangeValueEl = document.querySelector<HTMLDivElement>(
-    '[data-multi-range]'
+    '[data-range-minmax]'
   )
 
   if (!singleValueEl) {
@@ -17,9 +17,8 @@ const onLoad = () => {
     throw new Error('could not find range value element')
   }
 
-  const singelValueInstance = singleValue(
+  const singelValueInstance = rangeValue(
     {
-      name: singleValueEl.dataset.range,
       selector: singleValueEl,
       min: 0,
       max: 10,
@@ -28,8 +27,7 @@ const onLoad = () => {
     2
   )
 
-  const rangeValueInstance = rangeValue({
-    name: rangeValueEl.dataset.multiRange,
+  const rangeValueInstance = rangeMinMax({
     selector: rangeValueEl,
     min: 0,
     max: 10,

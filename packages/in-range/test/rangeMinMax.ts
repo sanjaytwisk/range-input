@@ -1,10 +1,10 @@
-import { rangeValue, RangeOptions, RangeValue } from '../'
+import { rangeMinMax, RangeMinMaxOptions, RangeMinMax } from '../lib'
 import { createRangeElement } from './helpers/helpers'
 
-describe('rangeValue', () => {
+describe('rangeMinMax', () => {
   const initialValue = { min: 3, max: 9 }
-  let instance: RangeValue
-  let options: RangeOptions = {
+  let instance: RangeMinMax
+  let options: RangeMinMaxOptions = {
     selector: createRangeElement(),
     name: 'test',
     min: 0,
@@ -17,12 +17,12 @@ describe('rangeValue', () => {
       ...options,
       selector: createRangeElement(),
     }
-    instance = rangeValue(options, initialValue)
+    instance = rangeMinMax(options, initialValue)
   })
 
   describe('getValue', () => {
     it('given no initial value was set, it should return the min and max values', () => {
-      instance = rangeValue(options)
+      instance = rangeMinMax(options)
       expect(instance.getValue()).toEqual({
         min: options.min,
         max: options.max,
@@ -34,7 +34,7 @@ describe('rangeValue', () => {
     })
 
     it('given a partial initial value was set, it should merge the intial value with the min/max values', () => {
-      instance = rangeValue(options, { min: 3 })
+      instance = rangeMinMax(options, { min: 3 })
       expect(instance.getValue()).toEqual({ min: 3, max: options.max })
     })
   })

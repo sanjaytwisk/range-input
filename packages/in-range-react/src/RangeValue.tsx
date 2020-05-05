@@ -12,7 +12,7 @@ import { RangeFill } from './RangeFill'
 import { RangeTrack } from './RangeTrack'
 import { useJS } from './useJS'
 
-export interface RangeProps {
+export interface RangeValueProps {
   name: string
   min: number
   max: number
@@ -25,7 +25,7 @@ export interface RangeProps {
   withTrack?: boolean
 }
 
-export const Range: React.FunctionComponent<RangeProps> = ({
+export const RangeValue: React.FunctionComponent<RangeValueProps> = ({
   name,
   min,
   max,
