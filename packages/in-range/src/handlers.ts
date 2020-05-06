@@ -1,5 +1,4 @@
-import { Ref } from './utils'
-import { SetFn } from './range'
+import { Ref, SetFn } from './types'
 
 export const createOnMouseDown = (mouseDownRef: Ref<boolean>) => () => {
   mouseDownRef.current = true

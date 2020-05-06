@@ -1,7 +1,4 @@
-export enum Actions {
-  SET_RECT = 'SET_RECT',
-  SET_VALUE = 'SET_VALUE',
-}
+import { Actions } from './types'
 
 export const createSetRect = ({ left, width }: DOMRect) => ({
   type: Actions.SET_RECT,

@@ -1,9 +1,5 @@
-import { Bounds, isEqualValue, valueToPosition } from './utils'
-import { State, Value, Observer } from './store'
-
-export interface Fill {
-  update: Observer
-}
+import { isEqualValue, valueToPosition } from './utils'
+import { Bounds, State, Value } from './types'
 
 const valuesToStartEnd = (value: Value, bounds: Bounds) => {
   const { min, max } = value

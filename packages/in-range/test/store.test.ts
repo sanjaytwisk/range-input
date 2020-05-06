@@ -1,4 +1,5 @@
-import { createStore, reduce, Store } from '../src/store'
+import { createStore, reduce } from '../src/store'
+import { Store } from '../src/types'
 
 describe('reduce', () => {
   const initialState = {

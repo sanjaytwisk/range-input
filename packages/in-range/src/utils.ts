@@ -1,25 +1,4 @@
-import { Value } from './store'
-export interface Bounds {
-  min: number
-  max: number
-  step: number
-}
-
-interface Options extends Bounds {
-  name: string
-  onValidate?: Validator
-}
-
-export interface Rect {
-  left: number
-  width: number
-}
-
-export interface Ref<T> {
-  current: T
-}
-
-export type Validator = (value?: number) => boolean
+import { Value, Options, Bounds, Rect } from './types'
 
 export const createRef = <T extends {}>(initialValue: T) => ({
   current: initialValue,

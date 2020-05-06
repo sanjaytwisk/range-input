@@ -1,4 +1,5 @@
-import { Fill, createFill } from '../src/fill'
+import { createFill } from '../src/fill'
+import { Fill } from '../src/types'
 
 const getState = (value: { [key: string]: number }) => {
   return {

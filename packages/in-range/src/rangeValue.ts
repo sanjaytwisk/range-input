@@ -1,19 +1,10 @@
-import { createRange, Options, MockEvent } from './range'
-import { createStore, State } from './store'
+import { createRange } from './range'
+import { createStore } from './store'
 import { createSetValue } from './actions'
 import { getElements } from './utils'
 import { createFill } from './fill'
 
-export interface RangeValue {
-  getValue: () => number
-  setValue: (nextValue: number) => void
-  destroy: () => void
-}
-
-export interface RangeValueOptions extends Options {
-  selector: string | HTMLElement
-  onValueChange?: (evt: MockEvent<number>) => void
-}
+import { State, RangeValueOptions, RangeValue } from './types'
 
 const initialState = {
   value: {},

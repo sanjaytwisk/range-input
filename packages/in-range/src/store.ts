@@ -1,25 +1,4 @@
-import { Actions } from './actions'
-
-export interface Value {
-  [key: string]: number
-}
-
-export interface State {
-  value: Value
-  rect: { left: number; width: number }
-}
-
-export interface Action<T = any> {
-  type: string
-  payload?: T
-}
-
-export type Observer = (previouseState: State, nextState: State) => void
-export interface Store {
-  getState: () => State
-  subscribe: (observer: Observer) => () => void
-  dispatch: (action: Action) => void
-}
+import { Actions, Store, State, Action, Observer } from './types'
 
 export const reduce = (state: State, action: Action) => {
   switch (action.type) {
@@ -41,7 +20,7 @@ export const reduce = (state: State, action: Action) => {
   }
 }
 
-export const createStore = (initialState: State) => {
+export const createStore = (initialState: State): Store => {
   let currentState = reduce(initialState, { type: 'EMPTY' })
   const observers = new Set<Observer>()
 

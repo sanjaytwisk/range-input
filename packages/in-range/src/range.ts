@@ -1,11 +1,5 @@
-import {
-  isValidValue,
-  getNextValue,
-  valueToPosition,
-  Validator,
-  createRef,
-} from './utils'
-import { Store, State } from './store'
+import { isValidValue, getNextValue, valueToPosition, createRef } from './utils'
+import {} from './store'
 import {
   createSetRect as createSetRectAction,
   createSetValue as createSetValueAction,
@@ -19,37 +13,7 @@ import {
   createOnInputChange,
   createOnResize,
 } from './handlers'
-
-export type MockEvent<T = string> = {
-  target: {
-    name: string
-    value: T
-  }
-}
-interface Elements {
-  root: HTMLElement
-  input: HTMLInputElement
-  thumb: HTMLLabelElement
-}
-
-interface RangeOptions extends Options {
-  name: string
-}
-
-export interface Options {
-  min: number
-  max: number
-  step: number
-  onValidate?: Validator
-}
-
-export type SetFn = (value: number) => void
-
-export interface Range {
-  setValue: SetFn
-  update: (state: State, prevState: State) => void
-  destroy: () => void
-}
+import { RangeOptions, Store, State, SetFn, Elements } from './types'
 
 const createSetValue = (store: Store, options: RangeOptions) => (
   nextValue: number

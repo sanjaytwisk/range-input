@@ -1,6 +1,6 @@
-import { createRange, Range } from '../src/range'
+import { createRange } from '../src/range'
 import { createStore } from '../src/store'
-import { Actions } from '../src/actions'
+import { Range, Actions } from '../src/types'
 
 jest.mock('../src/store')
 

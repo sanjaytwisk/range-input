@@ -1,29 +1,12 @@
-import { createRange, Options, MockEvent } from './range'
-import { createStore, Value } from './store'
+import { createRange } from './range'
+import { createStore } from './store'
 import { createSetValue } from './actions'
 import { getElement, getRootElement, getElements, isEqualValue } from './utils'
 import { createFill } from './fill'
+import { RangeMinMaxOptions, ValueMinMax, RangeMinMax, Name } from './types'
 
 const MIN = 'min'
 const MAX = 'max'
-
-type Name = 'min' | 'max'
-
-interface ValueMinMax {
-  min: number
-  max: number
-}
-
-export interface RangeMinMax {
-  getValue: () => ValueMinMax
-  setValue: (nextValue: number, name: Name) => void
-  destroy: () => void
-}
-
-export interface RangeMinMaxOptions extends Options {
-  selector: string | HTMLElement
-  onValueChange?: (evt: MockEvent<Value>) => void
-}
 
 const initialState = {
   value: {},
