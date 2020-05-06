@@ -7,7 +7,6 @@ describe('rangeValue', () => {
   let onValidate = jest.fn()
   const initialValue = 5
   const options = {
-    name: 'test',
     min: 0,
     max: 10,
     step: 1,

@@ -32,8 +32,11 @@ interface Elements {
   thumb: HTMLLabelElement
 }
 
-export interface Options {
+interface RangeOptions extends Options {
   name: string
+}
+
+export interface Options {
   min: number
   max: number
   step: number
@@ -48,7 +51,7 @@ export interface Range {
   destroy: () => void
 }
 
-const createSetValue = (store: Store, options: Options) => (
+const createSetValue = (store: Store, options: RangeOptions) => (
   nextValue: number
 ) => {
   const { name } = options
@@ -58,9 +61,11 @@ const createSetValue = (store: Store, options: Options) => (
   }
 }
 
-const createSetPosition = (store: Store, options: Options, setValue: SetFn) => (
-  nextPosition: number
-) => {
+const createSetPosition = (
+  store: Store,
+  options: RangeOptions,
+  setValue: SetFn
+) => (nextPosition: number) => {
   const { value, rect } = store.getState()
   const { name } = options
   const nextValue = getNextValue(nextPosition, rect, options)
@@ -74,7 +79,7 @@ const createSetRect = (store: Store, elements: Elements) => () =>
 
 export const createRange = (
   elements: Elements,
-  options: Options,
+  options: RangeOptions,
   store: Store
 ) => {
   const { thumb, root, input } = elements

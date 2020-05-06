@@ -6,7 +6,6 @@ describe('rangeMinMax', () => {
   let instance: RangeMinMax
   let options: RangeMinMaxOptions = {
     selector: createRangeElement(),
-    name: 'test',
     min: 0,
     max: 10,
     step: 1,
