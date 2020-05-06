@@ -15,14 +15,29 @@ import {
 } from './handlers'
 import { RangeOptions, Store, State, SetFn, Elements } from './types'
 
-const createSetValue = (store: Store, options: RangeOptions) => (
+const createSetInputValue = (inputEl: HTMLInputElement) => (
   nextValue: number
 ) => {
+  inputEl.value = nextValue.toString()
+}
+
+const createSetThumbPosition = (thumbEl: HTMLLabelElement) => (
+  position: number
+) => {
+  thumbEl.setAttribute('style', `--range-thumb-left:${position}%;`)
+}
+
+const createSetValue = (
+  store: Store,
+  options: RangeOptions,
+  restoreValue: (currentValue: number) => void
+) => (nextValue: number) => {
   const { name } = options
   const currentValue = store.getState().value[name]
-  if (isValidValue(nextValue, currentValue, options)) {
-    store.dispatch(createSetValueAction(nextValue, name))
+  if (!isValidValue(nextValue, currentValue, options)) {
+    return restoreValue(currentValue)
   }
+  store.dispatch(createSetValueAction(nextValue, name))
 }
 
 const createSetPosition = (
@@ -49,7 +64,9 @@ export const createRange = (
   const { thumb, root, input } = elements
   const mouseDownRef = createRef(false)
   const timeoutRef = createRef(0)
-  const setValue = createSetValue(store, options)
+  const setInputValue = createSetInputValue(input)
+  const setThumbPosition = createSetThumbPosition(thumb)
+  const setValue = createSetValue(store, options, setInputValue)
   const setPosition = createSetPosition(store, options, setValue)
   const setRect = createSetRect(store, elements)
 
@@ -85,14 +102,13 @@ export const createRange = (
     window.removeEventListener('resize', onResize)
   }
 
-  const update = ({ value }: State, previousState: State) => {
+  const update = ({ value }: State, { value: previousValue }: State) => {
     const { name } = options
-    if (value[name] === previousState.value[name]) {
+    if (value[name] === previousValue[name]) {
       return
     }
-    const position = valueToPosition(value[name], options)
-    input.value = value[name].toString()
-    thumb.setAttribute('style', `--range-thumb-left:${position}%;`)
+    setInputValue(value[name])
+    setThumbPosition(valueToPosition(value[name], options))
   }
 
   setRect()
