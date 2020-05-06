@@ -1,4 +1,12 @@
 export * from './types'
 export * from './rangeMinMax'
 export * from './rangeValue'
-export * from './utils'
+export {
+  isValidValue,
+  validateValue,
+  getNextValue,
+  positionToValue,
+  valueToPosition,
+  withJS,
+  detectInputDevice,
+} from './utils'
