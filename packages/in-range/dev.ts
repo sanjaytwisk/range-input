@@ -4,7 +4,7 @@ import './src/css/in-range.css'
 const onLoad = () => {
   withJS()
   detectInputDevice()
-  const onValueChange = ({ target }) => console.log(target)
+  const onValueChange = ({ target }) => console.log(target) // tslint:disable-line
   const singleValueEl = document.querySelector<HTMLDivElement>(
     '[data-in-range="value"]'
   )
