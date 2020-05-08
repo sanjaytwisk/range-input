@@ -1,7 +1,14 @@
 import { createRange } from './range'
 import { createStore } from './store'
 import { createSetValue } from './actions'
-import { getElement, getRootElement, getElements, isEqualValue } from './utils'
+import { DATA_NAME } from './constants'
+import {
+  getElement,
+  getRootElement,
+  getElements,
+  isEqualValue,
+  getOptions,
+} from './utils'
 import { createFill } from './fill'
 import { RangeMinMaxOptions, ValueMinMax, RangeMinMax, Name } from './types'
 
@@ -16,31 +23,22 @@ const initialState = {
   },
 }
 
-const getName = (rootElement: HTMLElement) => {
-  const { rangeMinmax: name } = rootElement.dataset
-  if (!name) {
-    throw new Error('Missing a name value in data-range-minmax attribute')
-  }
-  return name
-}
-
 export const rangeMinMax = (
-  options: RangeMinMaxOptions,
+  config: RangeMinMaxOptions,
   initialValue: Partial<ValueMinMax> = {}
 ): RangeMinMax => {
-  const rootElement = getRootElement(options.selector)
+  const rootElement = getRootElement(config.selector)
+  const options = getOptions(rootElement, config)
   const fill = rootElement.querySelector<HTMLElement>('[data-range-fill]')
   const selectors = {
-    [MIN]: getElement(rootElement, `[data-range="${MIN}"]`),
-    [MAX]: getElement(rootElement, `[data-range="${MAX}"]`),
+    [MIN]: getElement(rootElement, `[${DATA_NAME}="${MIN}"]`),
+    [MAX]: getElement(rootElement, `[${DATA_NAME}="${MAX}"]`),
   }
   const minElements = getElements(selectors.min)
   const maxElements = getElements(selectors.max)
   const store = createStore({
     ...initialState,
   })
-
-  const inputName = getName(rootElement)
 
   const createOnValidate = (name: Name) => (nextValue: number) => {
     const { min, max } = store.getState().value
@@ -81,24 +79,24 @@ export const rangeMinMax = (
     store.subscribe(instance.update)
   )
 
+  store.dispatch(createSetValue(initialValue[MIN] || options.min, MIN))
+  store.dispatch(createSetValue(initialValue[MAX] || options.max, MAX))
+
   const unsubscribeValueChange = store.subscribe((state, previousState) => {
     const value = state.value
     const previousValue = previousState.value
 
     if (
-      !options.onValueChange ||
+      !config.onValueChange ||
       isEqualValue(value, previousValue) ||
       !Object.keys(previousValue).length
     ) {
       return
     }
-    options.onValueChange({
-      target: { name: inputName, value },
+    config.onValueChange({
+      target: { name: options.name, value },
     })
   })
-
-  store.dispatch(createSetValue(initialValue[MIN] || options.min, MIN))
-  store.dispatch(createSetValue(initialValue[MAX] || options.max, MAX))
 
   const setValue = (nextValue: number, name: Name) => {
     if (!name || ![MIN, MAX].includes(name)) return

@@ -12,12 +12,12 @@ export interface RangeOptions extends Options {
   name: string
 }
 
-export interface RangeValueOptions extends Options {
+export interface RangeValueOptions extends Partial<Options> {
   selector: string | HTMLElement
   onValueChange?: (evt: MockEvent<number>) => void
 }
 
-export interface RangeMinMaxOptions extends Options {
+export interface RangeMinMaxOptions extends Partial<Options> {
   selector: string | HTMLElement
   onValueChange?: (evt: MockEvent<Value>) => void
 }

@@ -1,4 +1,4 @@
-import { RangeValue, rangeValue } from '../lib'
+import { RangeValue, rangeValue } from '../src'
 import { createElements } from './helpers/helpers'
 
 describe('rangeValue', () => {
@@ -20,6 +20,16 @@ describe('rangeValue', () => {
       { ...options, selector, onValueChange, onValidate },
       initialValue
     )
+  })
+
+  describe('constructor', () => {
+    it('given the options parameter contains a valid onValueChange callback, it should be called when the value updates', () => {
+      const nextValue = 8
+      const expected = { target: { name: 'test', value: nextValue } }
+      instance.setValue(nextValue)
+      expect(onValueChange.mock.calls.length).toEqual(1)
+      expect(onValueChange.mock.calls[0][0]).toEqual(expected)
+    })
   })
 
   describe('getValue', () => {

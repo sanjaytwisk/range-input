@@ -1,7 +1,7 @@
 import { createRange } from './range'
 import { createStore } from './store'
 import { createSetValue } from './actions'
-import { getElements } from './utils'
+import { getElements, getOptions } from './utils'
 import { createFill } from './fill'
 
 import { State, RangeValueOptions, RangeValue } from './types'
@@ -16,20 +16,13 @@ const initialState = {
 
 const selectValue = (state: State, name: string) => state.value[name]
 
-const getName = (inputEl: HTMLInputElement) => {
-  const { name } = inputEl
-  if (!name) {
-    throw new Error('Missing input element name attribute')
-  }
-  return name
-}
-
 export const rangeValue = (
-  options: RangeValueOptions,
+  config: RangeValueOptions,
   initialValue?: number
 ): RangeValue => {
-  const elements = getElements(options.selector)
-  const name = getName(elements.input)
+  const elements = getElements(config.selector)
+  const options = getOptions(elements.root, config)
+  const { name } = options
   const store = createStore({
     ...initialState,
   })
@@ -40,11 +33,15 @@ export const rangeValue = (
   const unsubscribeValueChange = store.subscribe((state, previousState) => {
     const value = selectValue(state, name)
     const previousValue = selectValue(previousState, name)
-    if (!options.onValueChange || value === previousValue || !previousValue) {
+    if (
+      !config.onValueChange ||
+      value === previousValue ||
+      typeof previousValue === 'undefined'
+    ) {
       return
     }
-    options.onValueChange({
-      target: { name, value: value[name] },
+    config.onValueChange({
+      target: { name, value },
     })
   })
 

@@ -6,6 +6,7 @@ import {
   valueToPosition,
   getRootElement,
   getElements,
+  getOptions,
 } from '../src/utils'
 
 describe('utils', () => {
@@ -50,11 +51,11 @@ describe('utils', () => {
     let input: HTMLElement
     beforeEach(() => {
       element = document.createElement('div')
-      element.setAttribute('data-range', '')
+      element.setAttribute('data-in-range', '')
       thumb = document.createElement('label')
       input = document.createElement('input')
-      thumb.setAttribute('data-range-thumb', '')
-      input.setAttribute('data-range-input', '')
+      thumb.setAttribute('data-in-range-thumb', '')
+      input.setAttribute('data-in-range-input', '')
       element.append(thumb)
       element.append(input)
       document.body.innerHTML = ''
@@ -69,7 +70,7 @@ describe('utils', () => {
     })
 
     it('given a valid element selector and all required elements exist in the DOM, it should return an object of elements', () => {
-      const result = getElements('[data-range]')
+      const result = getElements('[data-in-range]')
       expect(result).toHaveProperty('root', element)
       expect(result).toHaveProperty('thumb', thumb)
       expect(result).toHaveProperty('input', input)
@@ -78,7 +79,7 @@ describe('utils', () => {
 
     it('given the fill element exists in the DOM, it should return the fill element', () => {
       const fill = document.createElement('div')
-      fill.setAttribute('data-range-fill', '')
+      fill.setAttribute('data-in-range-fill', '')
       element.append(fill)
       const result = getElements(element)
       expect(result).toHaveProperty('fill', fill)
@@ -91,6 +92,62 @@ describe('utils', () => {
     it('given any of the required elements cannot be found, it should throw an error', () => {
       element.removeChild(input)
       expect(() => getElements(element)).toThrow()
+    })
+  })
+
+  describe('getOptions()', () => {
+    let element: HTMLDivElement
+    const bounds = {
+      min: 0,
+      max: 10,
+      step: 2,
+    }
+    beforeEach(() => {
+      element = document.createElement('div')
+      element.setAttribute('data-in-range', 'value')
+      element.setAttribute('data-in-range-name', 'test')
+      element.setAttribute('data-in-range-min', bounds.min.toString())
+      element.setAttribute('data-in-range-max', bounds.max.toString())
+      element.setAttribute('data-in-range-step', bounds.step.toString())
+    })
+    it('given the element parameter contains the correct data attributes, it should return a Options object', () => {
+      const options = getOptions(element)
+      const expected = {
+        name: 'test',
+        ...bounds,
+      }
+      expect(options).toEqual(expected)
+    })
+    it('given a valid options parameter, it should merge in the options', () => {
+      const onValidate = () => true
+      const options = getOptions(element, { min: 4, onValidate })
+      const expected = {
+        name: 'test',
+        ...bounds,
+        min: 4,
+        onValidate,
+      }
+      expect(options).toEqual(expected)
+    })
+
+    it('given the options parameter contains invalid values, it should throw', () => {
+      expect(() =>
+        getOptions(element, { min: '5', step: 'test' } as any)
+      ).toThrow()
+    })
+
+    it('given the options parameter contains unknown values, it should ignore those values', () => {
+      const options = getOptions(element, {
+        test: 'test',
+        onLoad: () => null,
+      } as any)
+      const expected = { name: 'test', ...bounds }
+      expect(options).toEqual(expected)
+    })
+
+    it('given the element provided does not contain the name attribute, it should throw', () => {
+      element.removeAttribute('data-in-range-name')
+      expect(() => getOptions(element)).toThrow()
     })
   })
 

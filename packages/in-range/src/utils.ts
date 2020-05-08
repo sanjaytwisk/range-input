@@ -1,4 +1,5 @@
-import { Value, Options, Bounds, Rect } from './types'
+import { Value, Options, Bounds, Rect, RangeOptions } from './types'
+import { DATA_ROOT } from './constants'
 
 export const createRef = <T extends {}>(initialValue: T) => ({
   current: initialValue,
@@ -28,10 +29,45 @@ export const getElement = <T extends HTMLElement>(
 
 export const getElements = (selector: string | HTMLElement) => {
   const root = getRootElement(selector)
-  const thumb = getElement<HTMLLabelElement>(root, '[data-range-thumb]')
-  const input = getElement<HTMLInputElement>(root, '[data-range-input]')
-  const fill = document.querySelector<HTMLElement>('[data-range-fill]')
+  const thumb = getElement<HTMLLabelElement>(root, `[${DATA_ROOT}-thumb]`)
+  const input = getElement<HTMLInputElement>(root, `[${DATA_ROOT}-input]`)
+  const fill = document.querySelector<HTMLElement>(`[${DATA_ROOT}-fill]`)
   return { root, thumb, input, fill }
+}
+
+export const getOptions = (
+  rootElement: HTMLElement,
+  options: Partial<Options> = {}
+): RangeOptions => {
+  const VALID_OPTIONS = ['min', 'max', 'step', 'onValidate']
+  const mergeOptions = Object.fromEntries(
+    Object.entries(options).filter(([name]) => VALID_OPTIONS.includes(name))
+  )
+  const {
+    inRangeName,
+    inRangeMin,
+    inRangeMax,
+    inRangeStep,
+  } = rootElement.dataset
+
+  if (!inRangeName) {
+    throw new Error('The data-in-range-name attribute is required')
+  }
+
+  Object.entries(mergeOptions).forEach(([name, value]) => {
+    if (name === 'onValidate') return
+    if (typeof value !== 'number') {
+      throw new Error(`'${name} options is not of type number'`)
+    }
+  })
+
+  return {
+    name: inRangeName,
+    min: Number(inRangeMin),
+    max: Number(inRangeMax),
+    step: Number(inRangeStep),
+    ...mergeOptions,
+  }
 }
 
 export const validateValue = (

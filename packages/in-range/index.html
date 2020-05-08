@@ -17,23 +17,30 @@
     <h1>In Range</h1>
     <section>
       <h3>Single Value</h3>
-      <div data-range="single-value" class="in-range-value">
+      <div
+        data-in-range="value"
+        data-in-range-name="range-value"
+        data-in-range-min="0"
+        data-in-range-max="10"
+        data-in-range-step="1"
+        class="in-range-value"
+      >
         <div class="in-range-track"></div>
-        <div class="in-range-fill" data-range-fill=""></div>
+        <div class="in-range-fill" data-in-range-fill=""></div>
         <input
           type="range"
           min="0"
           max="10"
           step="1"
           class="in-range-value__input"
-          id="single-value"
-          name="single-value"
-          data-range-input=""
+          id="range-value"
+          name="range-value"
+          data-in-range-input=""
         />
         <label
-          data-range-thumb=""
+          data-in-range-thumb=""
           class="in-range-value__label"
-          htmlFor="single-value"
+          htmlFor="range-value"
           draggable="false"
         >
           Set amount
@@ -42,44 +49,51 @@
     </section>
     <section>
       <h3>Range Value</h3>
-      <fieldset class="in-range-minmax" data-range-minmax="range-input">
+      <fieldset
+        class="in-range-minmax"
+        data-in-range="minmax"
+        data-in-range-name="range-minmax"
+        data-in-range-min="0"
+        data-in-range-max="10"
+        data-in-range-step="1"
+      >
         <div class="in-range-track"></div>
         <div class="in-range-fill" data-range-fill=""></div>
-        <div data-range="min" class="in-range-value">
+        <div data-in-range-name="min" class="in-range-value">
           <input
             type="range"
             min="0"
             max="10"
             step="1"
             class="in-range-value__input"
-            id="range-input[min]"
-            name="range-input[min]"
-            data-range-input=""
+            id="range-minmax[min]"
+            name="range-minmax[min]"
+            data-in-range-input=""
           />
           <label
-            data-range-thumb=""
+            data-in-range-thumb=""
             class="in-range-value__label"
-            htmlFor="range-input[min]"
+            htmlFor="range-minmax[min]"
             draggable="false"
           >
             Set minimum amount
           </label>
         </div>
-        <div data-range="max" class="in-range-value">
+        <div data-in-range-name="max" class="in-range-value">
           <input
             type="range"
             min="0"
             max="10"
             step="1"
             class="in-range-value__input"
-            id="range-input[max]"
-            name="range-input[max]"
-            data-range-input=""
+            id="range-minmax[max]"
+            name="range-minmax[max]"
+            data-in-range-input=""
           />
           <label
-            data-range-thumb=""
+            data-in-range-thumb=""
             class="in-range-value__label"
-            htmlFor="range-input[max]"
+            htmlFor="range-minmax[max]"
             draggable="false"
           >
             Set maximum amount

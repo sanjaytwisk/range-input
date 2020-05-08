@@ -1,4 +1,4 @@
-import { rangeMinMax, RangeMinMaxOptions, RangeMinMax } from '../lib'
+import { rangeMinMax, RangeMinMaxOptions, RangeMinMax } from '../src'
 import { createRangeElement } from './helpers/helpers'
 
 describe('rangeMinMax', () => {
