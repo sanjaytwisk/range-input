@@ -68,40 +68,7 @@ callback that is called each time the range value is updated.
 
 #### rangeValue(options, initialValue)
 
-The rangeValue component can be used to create a range input that sets a single value within a given range.
-
-```html
-<div
-  data-in-range="value"
-  data-in-range-name="range-value"
-  data-in-range-min="0"
-  data-in-range-max="10"
-  data-in-range-step="1"
-  class="in-range-value"
->
-  <div class="in-range-track"></div>
-  <div class="in-range-fill" data-in-range-fill=""></div>
-  <input
-    type="range"
-    min="0"
-    max="10"
-    step="1"
-    class="in-range-value__input"
-    id="range-value"
-    name="range-value"
-    data-in-range-input=""
-    value="0"
-  />
-  <label
-    data-in-range-thumb=""
-    class="in-range-value__label"
-    htmlFor="range-value"
-    draggable="false"
-  >
-    Set amount
-  </label>
-</div>
-```
+The rangeValue component ([HTML snippet](./html/range-value.html)) can be used to create a range input that sets a single value within a given range.
 
 ```js
 import { rangeValue } from '@twisk/in-range'
@@ -132,63 +99,7 @@ const rangeValueInstance = rangeValue(
 
 #### rangeMinMax(options, initialValue)
 
-The rangeMinMax component can be used to create a range input that sets a min and max value within a given range by composing two rangeValue components.
-
-```html
-<fieldset
-  class="in-range-minmax"
-  data-in-range="minmax"
-  data-in-range-name="range-minmax"
-  data-in-range-min="0"
-  data-in-range-max="10"
-  data-in-range-step="1"
->
-  <div class="in-range-track"></div>
-  <div class="in-range-fill" data-range-fill=""></div>
-  <div data-in-range-name="min" class="in-range-value">
-    <input
-      type="range"
-      min="0"
-      max="10"
-      step="1"
-      class="in-range-value__input"
-      id="range-minmax[min]"
-      name="range-minmax[min]"
-      data-in-range-input=""
-      value="0"
-    />
-    <label
-      data-in-range-thumb=""
-      class="in-range-value__label"
-      htmlFor="range-minmax[min]"
-      draggable="false"
-    >
-      Set minimum amount
-    </label>
-  </div>
-  <div data-in-range-name="max" class="in-range-value">
-    <input
-      type="range"
-      min="0"
-      max="10"
-      step="1"
-      class="in-range-value__input"
-      id="range-minmax[max]"
-      name="range-minmax[max]"
-      data-in-range-input=""
-      value="10"
-    />
-    <label
-      data-in-range-thumb=""
-      class="in-range-value__label"
-      htmlFor="range-minmax[max]"
-      draggable="false"
-    >
-      Set maximum amount
-    </label>
-  </div>
-</fieldset>
-```
+The rangeMinMax component ([HTML snippet](./html/range-minmax.html)) can be used to create a range input that sets a min and max value within a given range by composing two rangeValue components.
 
 ```js
 import { rangeMinMax } from '@twisk/in-range'
