@@ -4,5 +4,7 @@ module.exports = {
       'nesting-rules': false,
     },
     'postcss-nested': {},
+    'postcss-import': {},
+    cssnano: {},
   },
 }

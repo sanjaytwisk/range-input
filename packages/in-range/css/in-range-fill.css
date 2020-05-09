@@ -1,0 +1,1 @@
+.in-range-fill{display:none;position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);height:2px;height:var(--range-track-height,2px);background-color:#000;background-color:var(--range-fill-color,#000)}[data-has-js] .in-range-fill{display:block}

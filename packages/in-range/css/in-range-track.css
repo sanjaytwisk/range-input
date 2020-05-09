@@ -1,0 +1,1 @@
+.in-range-track{display:none;width:100%;height:2px;height:var(--range-track-height,2px);background:grey;background:var(--range-track-color,grey);border-radius:2px;border-radius:var(--range-track-height,2px)}[data-has-js] .in-range-track{display:block}
