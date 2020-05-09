@@ -1,7 +1,10 @@
 .in-range-minmax {
   border: none;
   padding: 0.5rem 0;
-  margin: 0.5rem;
   position: relative;
   width: calc(100% - 1rem);
+
+  [data-has-js] & {
+    margin: 0.5rem;
+  }
 }

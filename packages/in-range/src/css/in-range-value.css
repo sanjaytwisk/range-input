@@ -7,7 +7,7 @@
   --thumb-color-active: var(--range-thumb-color-active, grey);
   --focus-size: var(--range-focus-size, 2px);
   --focus-color: var(--range-focus-color, grey);
-  margin: var(--range-thumb-offset);
+  margin: 0;
   padding: 0.5rem 0;
   position: relative;
   display: flex;
@@ -99,6 +99,7 @@
 
   [data-has-js] & {
     display: block;
+    margin: var(--range-thumb-offset);
   }
 
   [data-has-js] .in-range-minmax & {
