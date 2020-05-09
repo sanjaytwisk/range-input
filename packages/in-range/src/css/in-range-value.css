@@ -125,7 +125,7 @@
     opacity: 0;
   }
 
-  [data-has-js] &__input:active + &__label {
+  [data-has-js] &__label:active {
     background: var(--thumb-color-active, grey);
   }
 
