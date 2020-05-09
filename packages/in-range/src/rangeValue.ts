@@ -1,7 +1,7 @@
 import { createRange } from './range'
 import { createStore } from './store'
 import { createSetValue } from './actions'
-import { getElements, getOptions } from './utils'
+import { getElements, getOptions, withJS, detectInputDevice } from './utils'
 import { createFill } from './fill'
 
 import { State, RangeValueOptions, RangeValue } from './types'
@@ -20,6 +20,8 @@ export const rangeValue = (
   config: RangeValueOptions,
   initialValue?: number
 ): RangeValue => {
+  withJS()
+  detectInputDevice()
   const elements = getElements(config.selector)
   const options = getOptions(elements.root, config)
   const { name } = options

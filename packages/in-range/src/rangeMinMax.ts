@@ -8,6 +8,8 @@ import {
   getElements,
   isEqualValue,
   getOptions,
+  withJS,
+  detectInputDevice,
 } from './utils'
 import { createFill } from './fill'
 import { RangeMinMaxOptions, ValueMinMax, RangeMinMax, Name } from './types'
@@ -27,6 +29,8 @@ export const rangeMinMax = (
   config: RangeMinMaxOptions,
   initialValue: Partial<ValueMinMax> = {}
 ): RangeMinMax => {
+  withJS()
+  detectInputDevice()
   const rootElement = getRootElement(config.selector)
   const options = getOptions(rootElement, config)
   const fill = rootElement.querySelector<HTMLElement>('[data-range-fill]')
